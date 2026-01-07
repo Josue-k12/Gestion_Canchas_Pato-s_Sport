@@ -1,0 +1,18 @@
+# Ignorar archivos de configuración local (donde pones tu contraseña de DB)
+config/db_local.php
+.env
+
+# Ignorar archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Ignorar archivos temporales y logs
+*.log
+/temp/
+/cache/
+
+# Si usan editores como VS Code o Sublime
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
