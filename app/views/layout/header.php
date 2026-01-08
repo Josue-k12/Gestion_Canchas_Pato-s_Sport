@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pato's Sport</title> 
     
-    <link rel="icon" type="image/png" href="assets/img/logo_patos.png">
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="icon" type="image/png" href="<?php echo URL; ?>public/img/logo_patos.png">
+    <link rel="stylesheet" href="<?php echo URL; ?>public/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
     <style>
@@ -42,7 +42,8 @@
 
         .hero-section {
             background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), 
-                        url('./assets/img/cancha_fondo.png');
+                        /* Ruta de imagen corregida para CSS */
+                        url('<?php echo URL; ?>public/img/cancha_fondo.png');
             background-size: cover;
             background-position: center;
             height: 500px;
@@ -56,7 +57,6 @@
         .buscador-container { max-width: 850px; margin: 0 auto; }
         .form-select, .form-control { border-radius: 0; }
         
-        /* Estilo extra para el texto del logo */
         .brand-text {
             letter-spacing: 1px;
             font-size: 1.5rem;
@@ -67,8 +67,8 @@
 
     <nav class="navbar navbar-expand-lg bg-patos-dark py-3 sticky-top">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="index.php">
-                <img src="assets/img/logo_patos.png" alt="Logo" style="height: 50px; width: auto;">
+            <a class="navbar-brand d-flex align-items-center" href="<?php echo URL; ?>">
+                <img src="<?php echo URL; ?>public/img/logo_patos.png" alt="Logo" style="height: 50px; width: auto;">
                 <span class="ms-2 fw-bold text-white brand-text">PATO'S SPORT</span>
             </a>
 
@@ -78,13 +78,17 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav mx-auto">
-                    <a class="nav-link" href="index.php">Inicio</a>
+                    <a class="nav-link" href="<?php echo URL; ?>">Inicio</a>
                     <a class="nav-link" href="#">Canchas</a>
                     <a class="nav-link" href="#">Torneos</a>
                     <a class="nav-link" href="#">Contacto</a>
                 </div>
                 <div class="d-flex">
-                    <a href="login.php" class="btn btn-patos px-4 shadow-sm">Iniciar Sesión</a>
+                    <?php if(!isset($_SESSION['user_id'])): ?>
+                        <a href="<?php echo URL; ?>app/views/auth/login.php" class="btn btn-patos px-4 shadow-sm">Iniciar Sesión</a>
+                    <?php else: ?>
+                        <a href="<?php echo URL; ?>app/controllers/AuthController.php?action=logout" class="btn btn-danger rounded-pill px-4">Cerrar Sesión</a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
