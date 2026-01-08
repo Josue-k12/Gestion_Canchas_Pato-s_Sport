@@ -1,3 +1,8 @@
+<?php 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start(); 
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -80,11 +85,27 @@
                 <div class="navbar-nav mx-auto">
                     <a class="nav-link" href="index.php">Inicio</a>
                     <a class="nav-link" href="#">Canchas</a>
+                    
+                    <?php if(isset($_SESSION['rol']) && ($_SESSION['rol'] == 'admin' || $_SESSION['rol'] == 'encargado')): ?>
+                        <a class="nav-link text-warning fw-bold" href="admin_dashboard.php">Gestión</a>
+                    <?php endif; ?>
+                    
                     <a class="nav-link" href="#">Torneos</a>
-                    <a class="nav-link" href="#">Contacto</a>
                 </div>
-                <div class="d-flex">
-                    <a href="login.php" class="btn btn-patos px-4 shadow-sm">Iniciar Sesión</a>
+                
+                <div class="d-flex align-items-center">
+                    <?php if(isset($_SESSION['user_id'])): ?>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-light dropdown-toggle btn-sm rounded-pill px-3" type="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle me-1"></i> <?php echo explode(' ', $_SESSION['user_nombre'])[0]; ?>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item text-danger" href="config/logout.php">Cerrar Sesión</a></li>
+                            </ul>
+                        </div>
+                    <?php else: ?>
+                        <a href="login.php" class="btn btn-patos px-4 shadow-sm">Iniciar Sesión</a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

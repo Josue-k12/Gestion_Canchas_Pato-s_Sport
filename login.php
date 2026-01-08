@@ -73,10 +73,10 @@
 
             <form action="config/procesar_login.php" method="POST">
                 <div class="text-start mb-3">
-                    <label class="form-label small fw-bold">Usuario</label>
+                    <label class="form-label small fw-bold">Correo electrónico</label>
                     <div class="input-group">
-                        <span class="input-group-text"><i class="bi bi-person"></i></span>
-                        <input type="text" name="usuario" class="form-control" placeholder="Nombre de usuario" required>
+                        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                        <input type="email" name="usuario" class="form-control" placeholder="Correo electrónico" required>
                     </div>
                 </div>
 
