@@ -1,15 +1,16 @@
 <?php
-// Requerimos el modelo de conexión que ya configuraste
+// 1. Cargamos la configuración y la conexión
+require_once __DIR__ . '/../../app/config/config.php';
 require_once __DIR__ . '/../models/Conexion.php';
 
 class AuthController {
 
-    // Aquí va la lógica de procesar_login.php
     public function login() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            session_start();
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
             
-            // Usamos la clase Conexion profesional que ya creamos
             $baseDatos = new Conexion();
             $conexion = $baseDatos->conectar();
 
@@ -29,32 +30,47 @@ class AuthController {
                     $stmt->execute();
                     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
+                    // Verificamos si existe el usuario y la contraseña coincide
                     if ($usuario && password_verify($password, $usuario['password'])) {
                         $_SESSION['user_id'] = $usuario['id'];
                         $_SESSION['user_nombre'] = $usuario['nombre'];
                         $_SESSION['rol'] = $usuario['rol_nombre'];
 
-                        // Redirección profesional usando la constante URL de tu config.php
-                        header("Location: " . URL . "app/views/home/index.php");
+                        // REDIRECCIÓN: Ahora que usamos el index de la raíz como entrada:
+                        header("Location: " . URL);
                         exit;
                     } else {
-                        echo "<script>alert('Credenciales incorrectas'); window.location.href='".URL."';</script>";
+                        echo "<script>alert('Credenciales incorrectas'); window.location.href='".URL."app/views/auth/login.php';</script>";
                     }
                 } catch (PDOException $e) {
                     error_log("Error en login: " . $e->getMessage());
-                    echo "Error en el servidor.";
+                    echo "Error crítico en el servidor.";
                 }
             }
         }
     }
 
-    // Aquí va la lógica de logout.php
     public function logout() {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         session_unset();
         session_destroy();
-        // Redirige al inicio (donde está el login) usando tu constante URL
-        header("Location: " . URL);
+        header("Location: " . URL . "app/views/auth/login.php");
         exit();
+    }
+}
+
+// ==========================================================
+// LÓGICA DE ENRUTAMIENTO (Esto activa el controlador)
+// ==========================================================
+$auth = new AuthController();
+
+// Detectamos la acción que viene por la URL (?action=...)
+if (isset($_GET['action'])) {
+    if ($_GET['action'] == 'login') {
+        $auth->login();
+    } elseif ($_GET['action'] == 'logout') {
+        $auth->logout();
     }
 }

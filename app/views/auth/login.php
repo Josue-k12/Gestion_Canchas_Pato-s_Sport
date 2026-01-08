@@ -1,11 +1,16 @@
+<?php 
+// 1. Cargamos la configuración para obtener la constante URL
+require_once '../../config/config.php'; 
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Pato's Sport</title>
-    <link rel="icon" type="image/png" href="assets/img/logo_patos.png">
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    
+    <link rel="icon" type="image/png" href="<?php echo URL; ?>public/img/logo_patos.png">
+    <link rel="stylesheet" href="<?php echo URL; ?>public/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
     <style>
@@ -18,9 +23,9 @@
 
         .login-container { height: 100vh; display: flex; overflow: hidden; }
 
-        /* Lado izquierdo: Imagen */
+        /* Lado izquierdo: Imagen - RUTA CORREGIDA EN CSS */
         .login-image {
-            background: url('assets/img/login_bg.png') center/cover no-repeat;
+            background: url('<?php echo URL; ?>public/img/login_bg.png') center/cover no-repeat;
             width: 55%;
             position: relative;
         }
@@ -39,7 +44,7 @@
         .form-card { width: 100%; max-width: 400px; }
 
         .btn-ingresar {
-            background-color: #28a745; /* Verde sólido como en tu imagen */
+            background-color: #28a745; 
             color: white;
             border: none;
             padding: 12px;
@@ -67,16 +72,17 @@
 
     <div class="login-form-section">
         <div class="form-card text-center">
-            <img src="assets/img/logo_patos.png" alt="Logo Pato's Sport" style="height: 120px;" class="mb-3">
+            <img src="<?php echo URL; ?>public/img/logo_patos.png" alt="Logo Pato's Sport" style="height: 120px;" class="mb-3">
             <h2 class="fw-bold mb-1">Bienvenido de Nuevo</h2>
             <p class="text-muted mb-4">Accede a tu panel de gestión.</p>
 
-            <form action="config/procesar_login.php" method="POST">
+            <form action="<?php echo URL; ?>app/controllers/AuthController.php?action=login" method="POST">
+                
                 <div class="text-start mb-3">
-                    <label class="form-label small fw-bold">Usuario</label>
+                    <label class="form-label small fw-bold">Usuario (Email)</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-person"></i></span>
-                        <input type="text" name="usuario" class="form-control" placeholder="Nombre de usuario" required>
+                        <input type="email" name="usuario" class="form-control" placeholder="admin@patos.com" required>
                     </div>
                 </div>
 
@@ -110,7 +116,6 @@
 </div>
 
 <script>
-    // Script para ver/ocultar contraseña
     const togglePassword = document.querySelector('#togglePassword');
     const password = document.querySelector('#password');
 

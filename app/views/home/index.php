@@ -1,16 +1,10 @@
 <?php 
-// 1. Iniciamos sesión y cargamos configuración
-session_start();
-require_once '../../config/config.php'; 
-
-// 2. Seguridad: Si no hay sesión, al login
-if (!isset($_SESSION['user_id'])) {
-    header("Location: " . URL);
-    exit();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 
-// 3. Incluimos el header (ajustando la ruta a la nueva carpeta includes)
-include '../includes/header.php'; 
+// Incluimos el header desde la raíz
+include 'app/views/layout/header.php'; 
 ?>
 
 <section class="hero-section">
@@ -41,7 +35,25 @@ include '../includes/header.php';
                 </div>
             </div>
         </div>
+        <div class="col-md-4">
+            <div class="d-flex align-items-start px-3">
+                <i class="bi bi-credit-card-2-front fs-1 text-success me-3"></i>
+                <div>
+                    <h6 class="fw-bold mb-1">Pagos Digitales Seguros</h6>
+                    <small class="text-muted">Asegure pagos digitales seguros y confiables.</small>
+                </div>
+            </div>
         </div>
+        <div class="col-md-4">
+            <div class="d-flex align-items-start px-3">
+                <i class="bi bi-trophy fs-1 text-success me-3"></i>
+                <div>
+                    <h6 class="fw-bold mb-1">Gestión de Campeonatos</h6>
+                    <small class="text-muted">Vista de campeonatos, noticias recientes y torneos.</small>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="container my-5">
@@ -56,14 +68,40 @@ include '../includes/header.php';
                             <div class="card-body">
                                 <p class="text-muted small mb-2"><i class="bi bi-calendar3"></i> 07/01/2026</p>
                                 <h5 class="fw-bold h6">Mantenimiento de Césped</h5>
-                                <p class="card-text small text-muted">Estamos renovando la cancha principal.</p>
+                                <p class="card-text small text-muted">Estamos renovando la cancha principal para el mejor nivel.</p>
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
+                            <img src="<?php echo URL; ?>public/img/noticia2.png" class="card-img-top" style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <p class="text-muted small mb-2"><i class="bi bi-calendar3"></i> 05/01/2026</p>
+                                <h5 class="fw-bold h6">Nueva Iluminación LED</h5>
+                                <p class="card-text small text-muted">Juega de noche con visibilidad perfecta gracias a la tecnología LED.</p>
+                            </div>
+                        </div>
                     </div>
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
+                            <img src="<?php echo URL; ?>public/img/noticia3.png" class="card-img-top" style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <p class="text-muted small mb-2"><i class="bi bi-calendar3"></i> 01/01/2026</p>
+                                <h5 class="fw-bold h6">Torneo Relámpago</h5>
+                                <p class="card-text small text-muted">Inscríbete hoy mismo en el torneo de este fin de semana.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselNoticias" data-bs-slide="prev" style="width: 5%; opacity: 0.8;">
+            <span class="bi bi-arrow-left-circle-fill text-dark fs-1" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselNoticias" data-bs-slide="next" style="width: 5%; opacity: 0.8;">
+            <span class="bi bi-arrow-right-circle-fill text-dark fs-1" aria-hidden="true"></span>
+        </button>
+    </div>
 </div>
 
 <div class="container my-5 pb-5">
@@ -75,11 +113,33 @@ include '../includes/header.php';
                     <img src="<?php echo URL; ?>public/img/cancha_fondo.png" class="card-img" style="height: 220px; object-fit: cover; filter: brightness(0.5);">
                     <div class="card-img-overlay d-flex flex-column justify-content-center text-center">
                         <h4 class="fw-bold">Torneo Apertura 2026</h4>
+                        <p class="small mb-0">Fútbol 7 - Masculino</p>
                     </div>
+                </div>
+                <div class="card-footer bg-white border-0 py-3 d-flex justify-content-between align-items-center">
+                    <span class="badge bg-warning text-dark px-3 py-2">Próximamente</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow rounded-4 overflow-hidden text-white">
+                <div class="position-relative">
+                    <img src="<?php echo URL; ?>public/img/torneo2.png" class="card-img" style="height: 220px; object-fit: cover; filter: brightness(0.5);">
+                    <div class="card-img-overlay d-flex flex-column justify-content-center text-center">
+                        <h4 class="fw-bold">Liga Empresarial</h4>
+                        <p class="small mb-0">Fútbol 5 - Libre</p>
+                    </div>
+                </div>
+                <div class="card-footer bg-white border-0 py-3 d-flex justify-content-between align-items-center">
+                    <span class="badge bg-danger px-3 py-2">Justo ahora</span>
+                    <button class="btn btn-patos btn-sm rounded-pill px-4 shadow-sm">Ver Detalles</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<?php 
+// Incluimos el footer desde la raíz
+include 'app/views/layout/footer.php'; 
+?>
