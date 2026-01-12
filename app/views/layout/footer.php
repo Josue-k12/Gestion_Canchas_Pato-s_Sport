@@ -1,4 +1,4 @@
-<footer class="bg-patos-dark text-white pt-5 pb-3 mt-5">
+<footer id="contacto" class="bg-patos-dark text-white pt-5 pb-3 mt-5">
     <div class="container">
         <div class="row text-center text-md-start">
             <div class="col-md-4 mb-4">
@@ -12,11 +12,12 @@
             </div>
 
             <div class="col-md-4 mb-4 text-center">
-                <h5 class="fw-bold mb-3">Viaje rápido</h5>
+                <h5 class="fw-bold mb-3">Menú</h5>
                 <ul class="list-unstyled">
-                    <li><a href="<?php echo URL; ?>" class="text-white text-decoration-none hover-verde">Inicio</a></li>
-                    <li><a href="#" class="text-white text-decoration-none hover-verde">Canchas</a></li>
-                    <li><a href="#" class="text-white text-decoration-none hover-verde">Torneos</a></li>
+                    <li><a href="#inicio" class="text-white text-decoration-none hover-verde">Inicio</a></li>
+                    <li><a href="#servicios" class="text-white text-decoration-none hover-verde">Servicios</a></li>
+                    <li><a href="#noticias" class="text-white text-decoration-none hover-verde">Noticias</a></li>
+                    <li><a href="#torneos" class="text-white text-decoration-none hover-verde">Torneos</a></li>
                 </ul>
             </div>
 
@@ -47,6 +48,7 @@
 </footer>
 
 <style>
+    /* Estilos para el efecto hover en el footer */
     .hover-verde:hover {
         color: var(--verde-patos) !important;
         transition: 0.3s;

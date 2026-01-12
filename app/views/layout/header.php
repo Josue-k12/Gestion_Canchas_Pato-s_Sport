@@ -15,6 +15,11 @@
             --oscuro-patos: #121821;
         }
 
+        /* EFECTO DE DESPLAZAMIENTO SUAVE */
+        html {
+            scroll-behavior: smooth;
+        }
+
         .bg-patos-dark { background-color: var(--oscuro-patos); }
         
         .nav-link { 
@@ -42,7 +47,6 @@
 
         .hero-section {
             background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), 
-                        /* Ruta de imagen corregida para CSS */
                         url('<?php echo URL; ?>public/img/cancha_fondo.png');
             background-size: cover;
             background-position: center;
@@ -55,11 +59,15 @@
         }
 
         .buscador-container { max-width: 850px; margin: 0 auto; }
-        .form-select, .form-control { border-radius: 0; }
         
         .brand-text {
             letter-spacing: 1px;
             font-size: 1.5rem;
+        }
+
+        /* Compensación para que el menú fijo no tape los títulos al bajar */
+        section, div[id], footer[id] {
+            scroll-margin-top: 90px;
         }
     </style>
 </head>
@@ -67,7 +75,7 @@
 
     <nav class="navbar navbar-expand-lg bg-patos-dark py-3 sticky-top">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="<?php echo URL; ?>">
+            <a class="navbar-brand d-flex align-items-center" href="<?php echo URL; ?>#inicio">
                 <img src="<?php echo URL; ?>public/img/logo_patos.png" alt="Logo" style="height: 50px; width: auto;">
                 <span class="ms-2 fw-bold text-white brand-text">PATO'S SPORT</span>
             </a>
@@ -78,16 +86,27 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav mx-auto">
-                    <a class="nav-link" href="<?php echo URL; ?>">Inicio</a>
-                    <a class="nav-link" href="#">Canchas</a>
-                    <a class="nav-link" href="#">Torneos</a>
-                    <a class="nav-link" href="#">Contacto</a>
+                    <a class="nav-link" href="<?php echo URL; ?>#inicio">Inicio</a>
+                    <a class="nav-link" href="#servicios">Servicios</a>
+                    <a class="nav-link" href="#noticias">Noticias</a>
+                    <a class="nav-link" href="#torneos">Torneos</a>
+                    <a class="nav-link" href="#contacto">Contacto</a>
                 </div>
+                
                 <div class="d-flex">
                     <?php if(!isset($_SESSION['user_id'])): ?>
                         <a href="<?php echo URL; ?>app/views/auth/login.php" class="btn btn-patos px-4 shadow-sm">Iniciar Sesión</a>
                     <?php else: ?>
-                        <a href="<?php echo URL; ?>app/controllers/AuthController.php?action=logout" class="btn btn-danger rounded-pill px-4">Cerrar Sesión</a>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-light dropdown-toggle rounded-pill px-3 me-2" type="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle me-1"></i> <?php echo explode(' ', $_SESSION['user_nombre'])[0]; ?>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+                                <li><a class="dropdown-item py-2" href="#"><i class="bi bi-gear me-2"></i>Mi Perfil</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item py-2 text-danger" href="<?php echo URL; ?>app/controllers/AuthController.php?action=logout"><i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión</a></li>
+                            </ul>
+                        </div>
                     <?php endif; ?>
                 </div>
             </div>
