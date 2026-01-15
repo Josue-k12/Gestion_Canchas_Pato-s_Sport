@@ -1,7 +1,3 @@
-<?php 
-// 1. Cargamos la configuración para obtener la constante URL
-require_once '../../config/config.php'; 
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -19,45 +15,57 @@ require_once '../../config/config.php';
             --oscuro-patos: #121821;
         }
 
-        body, html { height: 100%; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body, html { height: 100%; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow: hidden; }
+        .login-container { height: 100vh; display: flex; }
 
-        .login-container { height: 100vh; display: flex; overflow: hidden; }
-
-        /* Lado izquierdo: Imagen */
         .login-image {
             background: url('<?php echo URL; ?>public/img/login_bg.png') center/cover no-repeat;
             width: 55%;
-            position: relative;
         }
 
-        /* Lado derecho: Formulario */
         .login-form-section {
             width: 45%;
             background: white;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 3rem;
+            padding: 2rem;
+            position: relative; /* Importante para el botón flotante */
         }
 
-        .form-card { width: 100%; max-width: 400px; }
+        /* BOTÓN REGRESAR POSICIONADO ABSOLUTO */
+        .btn-regresar {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            text-decoration: none;
+            color: #6c757d;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+            z-index: 10;
+        }
+
+        .btn-regresar:hover { color: var(--verde-patos); transform: translateX(-5px); }
+
+        .form-card { width: 100%; max-width: 380px; }
 
         .btn-ingresar {
             background-color: #28a745; 
             color: white;
             border: none;
-            padding: 12px;
+            padding: 10px;
             font-weight: bold;
             width: 100%;
             transition: 0.3s;
         }
 
-        .btn-ingresar:hover { background-color: #218838; color: white; }
+        .btn-ingresar:hover { background-color: #218838; }
 
         .input-group-text { background: transparent; border-right: none; }
-        .form-control { border-left: none; }
-        .form-control:focus { border-color: #dee2e6; box-shadow: none; }
+        .form-control { border-left: none; height: 45px; }
 
         @media (max-width: 992px) {
             .login-image { display: none; }
@@ -71,18 +79,23 @@ require_once '../../config/config.php';
     <div class="login-image"></div>
 
     <div class="login-form-section">
+        
+        <a href="<?php echo URL; ?>" class="btn-regresar">
+            <i class="bi bi-arrow-left-circle fs-4"></i> 
+            Regresar al Inicio
+        </a>
+
         <div class="form-card text-center">
-            <img src="<?php echo URL; ?>public/img/logo_patos.png" alt="Logo Pato's Sport" style="height: 120px;" class="mb-3">
+            <img src="<?php echo URL; ?>public/img/logo_patos.png" alt="Logo" style="height: 100px;" class="mb-2">
             <h2 class="fw-bold mb-1">Bienvenido de Nuevo</h2>
-            <p class="text-muted mb-4">Accede a tu panel de gestión.</p>
+            <p class="text-muted mb-4 small">Accede a tu panel de gestión.</p>
 
             <form action="<?php echo URL; ?>auth/login" method="POST">
-                
                 <div class="text-start mb-3">
                     <label class="form-label small fw-bold">Correo electrónico</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                        <input type="email" name="usuario" class="form-control" placeholder="Correo electrónico" required>
+                        <input type="email" name="usuario" class="form-control" placeholder="admin@patos.com" required>
                     </div>
                 </div>
 
@@ -97,19 +110,17 @@ require_once '../../config/config.php';
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="remember">
-                        <label class="form-check-label small text-muted" for="remember">Recordar mi sesión</label>
-                    </div>
+                <div class="form-check text-start mb-4">
+                    <input class="form-check-input" type="checkbox" id="remember">
+                    <label class="form-check-label small text-muted" for="remember">Recordar sesión</label>
                 </div>
 
-                <button type="submit" class="btn btn-ingresar rounded-1 shadow-sm mb-3">INGRESAR</button>
+                <button type="submit" class="btn btn-ingresar rounded-1 shadow-sm">INGRESAR</button>
             </form>
 
-            <p class="small text-muted mt-3">
+            <p class="x-small text-muted mt-4">
                 ¿No tienes una cuenta? <br>
-                <span class="text-dark fw-bold">Contacta a la administración del complejo para solicitar acceso.</span>
+                <span class="text-dark fw-bold">Contacta a la administración.</span>
             </p>
         </div>
     </div>
@@ -118,7 +129,6 @@ require_once '../../config/config.php';
 <script>
     const togglePassword = document.querySelector('#togglePassword');
     const password = document.querySelector('#password');
-
     togglePassword.addEventListener('click', function () {
         const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
         password.setAttribute('type', type);

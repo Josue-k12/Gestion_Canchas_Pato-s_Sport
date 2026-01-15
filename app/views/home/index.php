@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Incluimos el header que ya tiene los estilos y la navegación
-include 'app/views/layout/header.php'; 
+include '../app/views/layout/header.php';
 ?>
 
 <section id="inicio" class="hero-section">
@@ -189,5 +189,5 @@ include 'app/views/layout/header.php';
 
 <?php 
 // El footer ya contiene el cierre de body y html
-include 'app/views/layout/footer.php'; 
+include '../app/views/layout/footer.php';
 ?>
