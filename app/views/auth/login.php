@@ -23,7 +23,7 @@ require_once '../../config/config.php';
 
         .login-container { height: 100vh; display: flex; overflow: hidden; }
 
-        /* Lado izquierdo: Imagen - RUTA CORREGIDA EN CSS */
+        /* Lado izquierdo: Imagen */
         .login-image {
             background: url('<?php echo URL; ?>public/img/login_bg.png') center/cover no-repeat;
             width: 55%;
@@ -79,10 +79,10 @@ require_once '../../config/config.php';
             <form action="<?php echo URL; ?>app/controllers/AuthController.php?action=login" method="POST">
                 
                 <div class="text-start mb-3">
-                    <label class="form-label small fw-bold">Usuario (Email)</label>
+                    <label class="form-label small fw-bold">Correo electrónico</label>
                     <div class="input-group">
-                        <span class="input-group-text"><i class="bi bi-person"></i></span>
-                        <input type="email" name="usuario" class="form-control" placeholder="admin@patos.com" required>
+                        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                        <input type="email" name="usuario" class="form-control" placeholder="Correo electrónico" required>
                     </div>
                 </div>
 
