@@ -76,7 +76,7 @@ require_once '../../config/config.php';
             <h2 class="fw-bold mb-1">Bienvenido de Nuevo</h2>
             <p class="text-muted mb-4">Accede a tu panel de gestión.</p>
 
-            <form action="<?php echo URL; ?>app/controllers/AuthController.php?action=login" method="POST">
+            <form action="<?php echo URL; ?>auth/login" method="POST">
                 
                 <div class="text-start mb-3">
                     <label class="form-label small fw-bold">Correo electrónico</label>
