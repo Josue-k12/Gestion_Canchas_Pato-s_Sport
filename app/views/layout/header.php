@@ -91,6 +91,7 @@
                     <a class="nav-link" href="#noticias">Noticias</a>
                     <a class="nav-link" href="#torneos">Torneos</a>
                     <a class="nav-link" href="#contacto">Contacto</a>
+                    <a class="nav-link" href="#ubicacion">Ubicación</a>
                 </div>
                 
                 <div class="d-flex">
