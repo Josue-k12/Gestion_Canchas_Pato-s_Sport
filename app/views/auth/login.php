@@ -39,6 +39,16 @@ require_once '../../config/config.php';
             justify-content: center;
             align-items: center;
             padding: 3rem;
+            position: relative;
+        }
+        
+        .btn-volver {
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        
+        .btn-volver:hover {
+            transform: translateX(-5px);
+            color: var(--verde-patos) !important;
         }
 
         .form-card { width: 100%; max-width: 400px; }
@@ -71,6 +81,11 @@ require_once '../../config/config.php';
     <div class="login-image"></div>
 
     <div class="login-form-section">
+        <!-- Botón para volver al inicio -->
+        <a href="<?php echo URL; ?>index.php" class="btn btn-link text-dark position-absolute" style="top: 20px; left: 20px; text-decoration: none; font-size: 1.2rem;" title="Volver al inicio">
+            <i class="bi bi-arrow-left-circle"></i> Volver al inicio
+        </a>
+        
         <div class="form-card text-center">
             <img src="<?php echo URL; ?>public/img/logo_patos.png" alt="Logo Pato's Sport" style="height: 120px;" class="mb-3">
             <h2 class="fw-bold mb-1">Bienvenido de Nuevo</h2>

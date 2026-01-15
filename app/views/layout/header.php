@@ -7,6 +7,7 @@
     
     <link rel="icon" type="image/png" href="<?php echo URL; ?>public/img/logo_patos.png">
     <link rel="stylesheet" href="<?php echo URL; ?>public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo URL; ?>public/css/bootstrap-icons.css">
 
     <style>
         :root {
