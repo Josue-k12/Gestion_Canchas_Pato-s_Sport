@@ -143,6 +143,34 @@ include 'app/views/layout/header.php';
     </div>
 </div>
 
+<section id="ubicacion" class="py-5 bg-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-5 mb-4 mb-md-0">
+                <h3 class="fw-bold text-uppercase mb-4">Nuestra Ubicación</h3>
+                <div class="card border-0 shadow-sm p-4 rounded-4">
+                    <p class="mb-2"><strong><i class="bi bi-person-badge me-2"></i>Propietario:</strong> Milton Montaluisa</p>
+                    <p class="mb-2"><strong><i class="bi bi-geo-alt-fill me-2"></i>Dirección:</strong> San José, Latacunga, Cotopaxi</p>
+                    <p class="mb-2"><strong><i class="bi bi-clock-fill me-2"></i>Horario:</strong> Lunes a Domingo: 8:00 – 23:00</p>
+                    <p class="mb-4"><strong><i class="bi bi-whatsapp me-2"></i>Contacto:</strong> +593 98 457 7224</p>
+                    
+                    <a href="https://wa.me/593984577224" target="_blank" class="btn btn-success rounded-pill w-100 fw-bold">
+                        <i class="bi bi-whatsapp me-2"></i>Reservar por WhatsApp
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="rounded-4 overflow-hidden shadow-sm" style="height: 400px;">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.266228394462!2d-78.596701!3d-0.9045925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d3613ad5eb401b%3A0x0dad886c00c76b41!2sCancha%20sint%C3%A9tica%20%22Pato&#39;s%20sport%22!5e0!3m2!1ses!2sec!4v1705244500000!5m2!1ses!2sec" 
+                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <style>
     .hover-card {
         transition: transform 0.3s ease, shadow 0.3s ease;
