@@ -7,7 +7,7 @@
     
     <link rel="icon" type="image/png" href="<?php echo URL; ?>public/img/logo_patos.png">
     <link rel="stylesheet" href="<?php echo URL; ?>public/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="<?php echo URL; ?>public/css/bootstrap-icons.css">
 
     <style>
         :root {
@@ -15,9 +15,19 @@
             --oscuro-patos: #121821;
         }
 
-        html { scroll-behavior: smooth; }
+        /* EFECTO DE DESPLAZAMIENTO SUAVE */
+        html {
+            scroll-behavior: smooth;
+        }
+
         .bg-patos-dark { background-color: var(--oscuro-patos); }
-        .nav-link { color: rgba(255,255,255,0.8) !important; margin-right: 15px; transition: 0.3s; }
+        
+        .nav-link { 
+            color: rgba(255,255,255,0.8) !important; 
+            margin-right: 15px;
+            transition: 0.3s;
+        }
+        
         .nav-link:hover { color: var(--verde-patos) !important; }
 
         .btn-patos { 
@@ -27,8 +37,6 @@
             font-weight: bold;
             border: none;
             transition: 0.3s;
-            text-decoration: none;
-            display: inline-block;
         }
         
         .btn-patos:hover { 
@@ -37,7 +45,6 @@
             color: white;
         }
 
-        /* --- ESTA ES LA PARTE QUE HACÍA FALTA PARA LA IMAGEN --- */
         .hero-section {
             background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), 
                         url('<?php echo URL; ?>public/img/cancha_fondo.png');
@@ -51,15 +58,24 @@
             text-align: center;
         }
 
-        .brand-text { letter-spacing: 1px; font-size: 1.5rem; }
-        section, div[id], footer[id] { scroll-margin-top: 90px; }
+        .buscador-container { max-width: 850px; margin: 0 auto; }
+        
+        .brand-text {
+            letter-spacing: 1px;
+            font-size: 1.5rem;
+        }
+
+        /* Compensación para que el menú fijo no tape los títulos al bajar */
+        section, div[id], footer[id] {
+            scroll-margin-top: 90px;
+        }
     </style>
 </head>
 <body>
 
     <nav class="navbar navbar-expand-lg bg-patos-dark py-3 sticky-top">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="<?php echo URL; ?>">
+            <a class="navbar-brand d-flex align-items-center" href="<?php echo URL; ?>#inicio">
                 <img src="<?php echo URL; ?>public/img/logo_patos.png" alt="Logo" style="height: 50px; width: auto;">
                 <span class="ms-2 fw-bold text-white brand-text">PATO'S SPORT</span>
             </a>
@@ -71,25 +87,26 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav mx-auto">
                     <a class="nav-link" href="<?php echo URL; ?>#inicio">Inicio</a>
-                    <a class="nav-link" href="<?php echo URL; ?>#servicios">Servicios</a>
-                    <a class="nav-link" href="<?php echo URL; ?>#noticias">Noticias</a>
-                    <a class="nav-link" href="<?php echo URL; ?>#torneos">Torneos</a>
-                    <a class="nav-link" href="<?php echo URL; ?>#contacto">Contacto</a>
-                    <a class="nav-link" href="<?php echo URL; ?>#ubicacion">Ubicación</a>
+                    <a class="nav-link" href="#servicios">Servicios</a>
+                    <a class="nav-link" href="#noticias">Noticias</a>
+                    <a class="nav-link" href="#torneos">Torneos</a>
+                    <a class="nav-link" href="#contacto">Contacto</a>
                 </div>
                 
                 <div class="d-flex">
                     <?php if(!isset($_SESSION['user_id'])): ?>
-                        <a href="<?php echo URL; ?>auth/login" class="btn btn-patos px-4 shadow-sm">Iniciar Sesión</a>
+                        <a href="<?php echo URL; ?>auth/login" class="btn btn-outline-success border-2 fw-bold rounded-pill px-4">
+    <i class="bi bi-person-circle"></i> Iniciar Sesión
+</a>
                     <?php else: ?>
                         <div class="dropdown">
                             <button class="btn btn-outline-light dropdown-toggle rounded-pill px-3 me-2" type="button" data-bs-toggle="dropdown">
                                 <i class="bi bi-person-circle me-1"></i> <?php echo explode(' ', $_SESSION['user_nombre'])[0]; ?>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
-                                <li><a class="dropdown-item py-2" href="<?php echo URL; ?>dashboard"><i class="bi bi-gear me-2"></i>Panel de Control</a></li>
+                                <li><a class="dropdown-item py-2" href="#"><i class="bi bi-gear me-2"></i>Mi Perfil</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item py-2 text-danger" href="<?php echo URL; ?>auth/logout"><i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión</a></li>
+                                <li><a class="dropdown-item py-2 text-danger" href="<?php echo URL; ?>app/controllers/AuthController.php?action=logout"><i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión</a></li>
                             </ul>
                         </div>
                     <?php endif; ?>

@@ -1,10 +1,502 @@
-<?php 
+<?php
+/**
+ * ARCHIVO DEPRECADO
+ * 
+ * Este archivo ya no se usa directamente.
+ * El HomeController ahora carga archivos específicos:
+ * - app/views/home/pagina_publica.php (para visitantes)
+ * - app/views/home/dashboard_admin.php (para administradores)
+ * - app/views/home/dashboard_cliente.php (para clientes)
+ * - app/views/home/dashboard_encargado.php (para encargados)
+ * 
+ * Este archivo se mantiene solo como respaldo.
+ */
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Incluimos el header que ya tiene los estilos y la navegación
-include '../app/views/layout/header.php';
+// Verificar si el usuario está logueado
+$rol = isset($_SESSION['rol']) ? $_SESSION['rol'] : 'invitado';
+$nombreUsuario = isset($_SESSION['user_nombre']) ? $_SESSION['user_nombre'] : '';
+
+// Si está logueado, mostrar el dashboard según su rol
+if ($rol !== 'invitado') {
+    include __DIR__ . '/../layout/header.php';
+    
+    // DASHBOARD PARA ADMIN
+    if ($rol === 'admin') {
+        ?>
+        <div class="content-wrapper">
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>Dashboard Administrador</h1>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content">
+                <div class="container-fluid">
+                    <!-- Small boxes (Stat box) -->
+                    <div class="row">
+                        <div class="col-lg-3 col-6">
+                            <div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3>150</h3>
+                                    <p>Reservas Totales</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <a href="<?php echo URL; ?>app/controllers/ReservaController.php" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-6">
+                            <div class="small-box bg-success">
+                                <div class="inner">
+                                    <h3>53</h3>
+                                    <p>Usuarios Registrados</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <a href="<?php echo URL; ?>app/controllers/UsuarioController.php" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-6">
+                            <div class="small-box bg-warning">
+                                <div class="inner">
+                                    <h3 class="text-white">8</h3>
+                                    <p class="text-white">Canchas Disponibles</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-futbol"></i>
+                                </div>
+                                <a href="<?php echo URL; ?>app/controllers/CanchaController.php" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-6">
+                            <div class="small-box bg-danger">
+                                <div class="inner">
+                                    <h3>$12,450</h3>
+                                    <p>Ingresos del Mes</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-dollar-sign"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gráficos y Tablas -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Reservas Recientes</h3>
+                                </div>
+                                <div class="card-body p-0">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Cliente</th>
+                                                <th>Cancha</th>
+                                                <th>Fecha</th>
+                                                <th>Estado</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Juan Pérez</td>
+                                                <td>Cancha 1</td>
+                                                <td>14/01/2026</td>
+                                                <td><span class="badge bg-success">Confirmada</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>María García</td>
+                                                <td>Cancha 2</td>
+                                                <td>14/01/2026</td>
+                                                <td><span class="badge bg-warning">Pendiente</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Carlos López</td>
+                                                <td>Cancha 3</td>
+                                                <td>15/01/2026</td>
+                                                <td><span class="badge bg-success">Confirmada</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Gestión Rápida</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-grid gap-2">
+                                        <a href="<?php echo URL; ?>app/views/reservas/crear.php" class="btn btn-primary btn-lg">
+                                            <i class="fas fa-plus-circle"></i> Nueva Reserva
+                                        </a>
+                                        <a href="<?php echo URL; ?>app/views/canchas/crear.php" class="btn btn-success btn-lg">
+                                            <i class="fas fa-futbol"></i> Añadir Cancha
+                                        </a>
+                                        <a href="<?php echo URL; ?>app/controllers/UsuarioController.php?action=crear" class="btn btn-info btn-lg">
+                                            <i class="fas fa-user-plus"></i> Nuevo Usuario
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <?php
+    }
+    
+    // DASHBOARD PARA CLIENTE
+    elseif ($rol === 'cliente') {
+        ?>
+        <div class="content-wrapper">
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>Mis Reservas</h1>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content">
+                <div class="container-fluid">
+                    <!-- Boxes para cliente -->
+                    <div class="row">
+                        <div class="col-lg-4 col-6">
+                            <div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3>5</h3>
+                                    <p>Reservas Activas</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <a href="<?php echo URL; ?>app/controllers/ReservaController.php" class="small-box-footer">Ver mis reservas <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-6">
+                            <div class="small-box bg-success">
+                                <div class="inner">
+                                    <h3>12</h3>
+                                    <p>Reservas Completadas</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">Ver historial <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-6">
+                            <div class="small-box bg-warning">
+                                <div class="inner">
+                                    <h3 class="text-white">8</h3>
+                                    <p class="text-white">Canchas Disponibles</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-futbol"></i>
+                                </div>
+                                <a href="<?php echo URL; ?>app/controllers/CanchaController.php" class="small-box-footer">Ver canchas <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Próximas reservas -->
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-header bg-primary">
+                                    <h3 class="card-title">Mis Próximas Reservas</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="timeline">
+                                        <div class="time-label">
+                                            <span class="bg-success">Hoy - 14 Ene 2026</span>
+                                        </div>
+                                        <div>
+                                            <i class="fas fa-futbol bg-info"></i>
+                                            <div class="timeline-item">
+                                                <span class="time"><i class="fas fa-clock"></i> 18:00 - 19:00</span>
+                                                <h3 class="timeline-header">Cancha 1 - Fútbol 7</h3>
+                                                <div class="timeline-body">
+                                                    <strong>Estado:</strong> <span class="badge bg-success">Confirmada</span><br>
+                                                    <strong>Precio:</strong> $50.00
+                                                </div>
+                                                <div class="timeline-footer">
+                                                    <a href="#" class="btn btn-danger btn-sm">Cancelar</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="time-label">
+                                            <span class="bg-warning">Mañana - 15 Ene 2026</span>
+                                        </div>
+                                        <div>
+                                            <i class="fas fa-futbol bg-success"></i>
+                                            <div class="timeline-item">
+                                                <span class="time"><i class="fas fa-clock"></i> 20:00 - 21:00</span>
+                                                <h3 class="timeline-header">Cancha 3 - Fútbol 5</h3>
+                                                <div class="timeline-body">
+                                                    <strong>Estado:</strong> <span class="badge bg-success">Confirmada</span><br>
+                                                    <strong>Precio:</strong> $40.00
+                                                </div>
+                                                <div class="timeline-footer">
+                                                    <a href="#" class="btn btn-danger btn-sm">Cancelar</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <i class="fas fa-clock bg-gray"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header bg-success">
+                                    <h3 class="card-title">Acciones Rápidas</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-grid gap-2">
+                                        <a href="<?php echo URL; ?>app/views/reservas/crear.php" class="btn btn-primary btn-lg">
+                                            <i class="fas fa-plus-circle"></i> Nueva Reserva
+                                        </a>
+                                        <a href="<?php echo URL; ?>app/controllers/CanchaController.php" class="btn btn-info btn-lg">
+                                            <i class="fas fa-list"></i> Ver Canchas
+                                        </a>
+                                        <a href="<?php echo URL; ?>app/controllers/ReservaController.php" class="btn btn-secondary btn-lg">
+                                            <i class="fas fa-history"></i> Mi Historial
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card mt-3">
+                                <div class="card-header">
+                                    <h3 class="card-title">Promociones</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="alert alert-success">
+                                        <h5><i class="icon fas fa-gift"></i> Oferta Especial!</h5>
+                                        20% de descuento en reservas de lunes a viernes antes de las 14:00
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <?php
+    }
+    
+    // DASHBOARD PARA ENCARGADO
+    elseif ($rol === 'encargado') {
+        ?>
+        <div class="content-wrapper">
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>Panel del Encargado</h1>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content">
+                <div class="container-fluid">
+                    <!-- Boxes para encargado -->
+                    <div class="row">
+                        <div class="col-lg-3 col-6">
+                            <div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3>24</h3>
+                                    <p>Reservas Hoy</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-calendar-day"></i>
+                                </div>
+                                <a href="<?php echo URL; ?>app/controllers/ReservaController.php" class="small-box-footer">Ver todas <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-6">
+                            <div class="small-box bg-success">
+                                <div class="inner">
+                                    <h3>8</h3>
+                                    <p>Canchas Activas</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-futbol"></i>
+                                </div>
+                                <a href="<?php echo URL; ?>app/controllers/CanchaController.php" class="small-box-footer">Gestionar <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-6">
+                            <div class="small-box bg-warning">
+                                <div class="inner">
+                                    <h3 class="text-white">2</h3>
+                                    <p class="text-white">En Mantenimiento</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-tools"></i>
+                                </div>
+                                <a href="<?php echo URL; ?>app/controllers/CanchaController.php" class="small-box-footer">Ver estado <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-6">
+                            <div class="small-box bg-danger">
+                                <div class="inner">
+                                    <h3>5</h3>
+                                    <p>Pendientes de Pago</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">Ver detalles <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reservas del día -->
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-header bg-info">
+                                    <h3 class="card-title">Agenda del Día - 14 de Enero</h3>
+                                </div>
+                                <div class="card-body p-0">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Hora</th>
+                                                <th>Cancha</th>
+                                                <th>Cliente</th>
+                                                <th>Estado</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>08:00 - 09:00</td>
+                                                <td>Cancha 1</td>
+                                                <td>Juan Pérez</td>
+                                                <td><span class="badge bg-success">Confirmada</span></td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-success"><i class="fas fa-check"></i></button>
+                                                    <button class="btn btn-sm btn-danger"><i class="fas fa-times"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>09:00 - 10:00</td>
+                                                <td>Cancha 2</td>
+                                                <td>María García</td>
+                                                <td><span class="badge bg-warning">Pendiente</span></td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-success"><i class="fas fa-check"></i></button>
+                                                    <button class="btn btn-sm btn-danger"><i class="fas fa-times"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>10:00 - 11:00</td>
+                                                <td>Cancha 1</td>
+                                                <td>Carlos López</td>
+                                                <td><span class="badge bg-success">Confirmada</span></td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-success"><i class="fas fa-check"></i></button>
+                                                    <button class="btn btn-sm btn-danger"><i class="fas fa-times"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>18:00 - 19:00</td>
+                                                <td>Cancha 3</td>
+                                                <td>Ana Martínez</td>
+                                                <td><span class="badge bg-info">En curso</span></td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-success"><i class="fas fa-check"></i></button>
+                                                    <button class="btn btn-sm btn-danger"><i class="fas fa-times"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header bg-success">
+                                    <h3 class="card-title">Gestión de Canchas</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-grid gap-2">
+                                        <a href="<?php echo URL; ?>app/views/reservas/crear.php" class="btn btn-primary btn-lg">
+                                            <i class="fas fa-plus-circle"></i> Nueva Reserva
+                                        </a>
+                                        <a href="<?php echo URL; ?>app/controllers/CanchaController.php" class="btn btn-warning btn-lg">
+                                            <i class="fas fa-tools"></i> Estado de Canchas
+                                        </a>
+                                        <a href="<?php echo URL; ?>app/controllers/ReservaController.php" class="btn btn-info btn-lg">
+                                            <i class="fas fa-list"></i> Todas las Reservas
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card mt-3">
+                                <div class="card-header bg-warning">
+                                    <h3 class="card-title">Alertas</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="callout callout-warning">
+                                        <h5><i class="fas fa-exclamation-triangle"></i> Atención!</h5>
+                                        <p>Cancha 2 requiere mantenimiento del césped esta semana.</p>
+                                    </div>
+                                    <div class="callout callout-info">
+                                        <h5><i class="fas fa-info-circle"></i> Recordatorio</h5>
+                                        <p>5 reservas pendientes de confirmación de pago.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <?php
+    }
+    
+    include __DIR__ . '/../layout/footer.php';
+    
+} else {
+    // Si NO está logueado, mostrar la página pública
+    include __DIR__ . '/../layout/header.php';
 ?>
 
 <section id="inicio" class="hero-section">
@@ -143,34 +635,6 @@ include '../app/views/layout/header.php';
     </div>
 </div>
 
-<section id="ubicacion" class="py-5 bg-white">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-5 mb-4 mb-md-0">
-                <h3 class="fw-bold text-uppercase mb-4">Nuestra Ubicación</h3>
-                <div class="card border-0 shadow-sm p-4 rounded-4">
-                    <p class="mb-2"><strong><i class="bi bi-person-badge me-2"></i>Propietario:</strong> Milton Montaluisa</p>
-                    <p class="mb-2"><strong><i class="bi bi-geo-alt-fill me-2"></i>Dirección:</strong> San José, Latacunga, Cotopaxi</p>
-                    <p class="mb-2"><strong><i class="bi bi-clock-fill me-2"></i>Horario:</strong> Lunes a Domingo: 8:00 – 23:00</p>
-                    <p class="mb-4"><strong><i class="bi bi-whatsapp me-2"></i>Contacto:</strong> +593 98 457 7224</p>
-                    
-                    <a href="https://wa.me/593984577224" target="_blank" class="btn btn-success rounded-pill w-100 fw-bold">
-                        <i class="bi bi-whatsapp me-2"></i>Reservar por WhatsApp
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-7">
-                <div class="rounded-4 overflow-hidden shadow-sm" style="height: 400px;">
-                    <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.266228394462!2d-78.596701!3d-0.9045925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d3613ad5eb401b%3A0x0dad886c00c76b41!2sCancha%20sint%C3%A9tica%20%22Pato&#39;s%20sport%22!5e0!3m2!1ses!2sec!4v1705244500000!5m2!1ses!2sec" 
-                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <style>
     .hover-card {
         transition: transform 0.3s ease, shadow 0.3s ease;
@@ -186,8 +650,43 @@ include '../app/views/layout/header.php';
         transform: scale(1.02);
     }
 </style>
+<section id="contacto" class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-5">
+                <h3 class="fw-bold mb-4">Contáctanos</h3>
+                <div class="card border-0 shadow-sm p-4 rounded-4">
+                    <p class="mb-2"><strong><i class="bi bi-person-fill text-success"></i> Propietario:</strong> Milton Montaluisa</p>
+                    
+                    <p class="mb-3">
+                        <strong><i class="bi bi-whatsapp text-success"></i> WhatsApp:</strong><br>
+                        <a href="https://wa.me/593984577224?text=Hola,%20me%20gustaría%20reservar%20la%20cancha" target="_blank" class="btn btn-success btn-sm mt-1">
+                            <i class="bi bi-whatsapp"></i> Enviar Mensaje
+                        </a>
+                    </p>
 
+                    <p class="mb-2"><strong><i class="bi bi-telephone-fill text-success"></i> Teléfono:</strong> <a href="tel:+593984577224" class="text-decoration-none text-dark">+593 98 457 7224</a></p>
+                    <p class="mb-2"><strong><i class="bi bi-geo-alt-fill text-success"></i> Dirección:</strong> San Jose, Latacunga</p>
+                    <p class="mb-0"><strong><i class="bi bi-clock-fill text-success"></i> Horario:</strong> 08:00 AM - 11:00 PM</p>
+                    
+                    <a href="https://www.google.com/maps/search/?api=1&query=Cancha+sintetica+Pato+sport+Latacunga&query_place_id=ChIJG0Dr1Tph1JERQWvHAGyIzg0" target="_blank" class="btn btn-primary w-100 rounded-pill mt-3">
+                        <i class="bi bi-geo-alt"></i> Cómo llegar (Google Maps)
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                <div class="rounded-4 overflow-hidden shadow-sm" style="height: 350px;">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.23123456789!2d-78.5963148!3d-0.9045925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d4613ad5eb401b%3A0x0dad886c00076b41!2sCancha%20sint%C3%A9tica%20%22Pato's%20sport%22!5e0!3m2!1ses!2sec!4v1715800000000!5m2!1ses!2sec" 
+                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 <?php 
-// El footer ya contiene el cierre de body y html
-include '../app/views/layout/footer.php';
+    } // Cierre del else original
+    include __DIR__ . '/../layout/footer.php'; 
 ?>

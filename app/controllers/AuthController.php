@@ -1,62 +1,76 @@
 <?php
+// 1. Cargamos la configuración y la conexión
+require_once __DIR__ . '/../../app/config/config.php';
+require_once __DIR__ . '/../models/Conexion.php';
 
-class AuthController extends Controller {
-    private $usuarioModel;
-
-    public function __construct() {
-        // Asumiendo que crearás este modelo luego, o puedes usar la conexión directa
-    }
+class AuthController {
 
     public function login() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $email = trim($_POST['usuario']);
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+            
+            $baseDatos = new Conexion();
+            $conexion = $baseDatos->conectar();
+
+            $email = trim($_POST['usuario']); 
             $password = trim($_POST['password']);
 
             if (!empty($email) && !empty($password)) {
                 try {
-                    $db = new Conexion();
-                    $conexion = $db->conectar();
-
-                    // La consulta que rescatamos de tus compañeros
                     $query = "SELECT u.*, r.nombre AS rol_nombre 
                               FROM usuarios u 
                               JOIN roles r ON u.rol_id = r.id 
                               WHERE u.email = :email AND u.estado = 'activo' 
                               LIMIT 1";
-
+                    
                     $stmt = $conexion->prepare($query);
                     $stmt->bindParam(':email', $email);
                     $stmt->execute();
                     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                    // Verificamos la contraseña (Usa password_verify por seguridad)
+                    // Verificamos si existe el usuario y la contraseña coincide
                     if ($usuario && password_verify($password, $usuario['password'])) {
-                        $_SESSION['usuario_id'] = $usuario['id'];
-                        $_SESSION['usuario_nombre'] = $usuario['nombre'];
-                        $_SESSION['usuario_rol'] = $usuario['rol_nombre'];
+                        $_SESSION['user_id'] = $usuario['id'];
+                        $_SESSION['user_nombre'] = $usuario['nombre'];
+                        $_SESSION['rol'] = $usuario['rol_nombre'];
 
-                        // Redirigir según el rol
-                        header("Location: " . URL . "/home");
-                        exit();
+                        // REDIRECCIÓN: Ahora que usamos el index de la raíz como entrada:
+                        header("Location: " . URL);
+                        exit;
                     } else {
-                        $data['error'] = "Credenciales incorrectas o cuenta inactiva.";
+                        echo "<script>alert('Credenciales incorrectas'); window.location.href='".URL."app/views/auth/login.php';</script>";
                     }
                 } catch (PDOException $e) {
-                    $data['error'] = "Error en el sistema: " . $e->getMessage();
+                    error_log("Error en login: " . $e->getMessage());
+                    echo "Error crítico en el servidor.";
                 }
-            } else {
-                $data['error'] = "Por favor, complete todos los campos.";
             }
         }
-        
-        // Carga la vista de login (tienes que tenerla en app/views/auth/login.php)
-        $this->view('auth/login', $data ?? []);
     }
 
     public function logout() {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        session_unset();
         session_destroy();
-        header("Location: " . URL . "/auth/login");
+        header("Location: " . URL . "app/views/auth/login.php");
         exit();
+    }
+}
+
+// ==========================================================
+// LÓGICA DE ENRUTAMIENTO (Esto activa el controlador)
+// ==========================================================
+$auth = new AuthController();
+
+// Detectamos la acción que viene por la URL (?action=...)
+if (isset($_GET['action'])) {
+    if ($_GET['action'] == 'login') {
+        $auth->login();
+    } elseif ($_GET['action'] == 'logout') {
+        $auth->logout();
     }
 }

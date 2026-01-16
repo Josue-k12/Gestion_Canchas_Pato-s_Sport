@@ -1,14 +1,12 @@
 <?php
-// 1. Cargar configuración una sola vez
-require_once '../app/config/config.php';
+// Usamos rutas absolutas para que no importe desde dónde se llame
+require_once __DIR__ . '/../app/config/config.php';
 
-// 2. Detectar la ruta
 $url = isset($_GET['url']) ? rtrim($_GET['url'], '/') : '';
 
-if ($url == 'auth/login') {
-    // Cargamos el login (sin require_once config porque ya se cargó arriba)
-    require_once '../app/views/auth/login.php';
+if ($url === 'auth/login') {
+    // Aquí cargamos la vista, el config ya está cargado arriba
+    require_once __DIR__ . '/../app/views/auth/login.php';
 } else {
-    // Cargamos el Home
-    include '../app/views/home/index.php';
+    require_once __DIR__ . '/../app/views/home/index.php';
 }

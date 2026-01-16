@@ -13,7 +13,7 @@
                         <p>Inicio</p>
                     </a>
                 </li>
-                </ul>
+            </ul>
         </nav>
     </div>
 </aside>
