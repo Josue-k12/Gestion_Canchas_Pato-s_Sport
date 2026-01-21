@@ -16,7 +16,7 @@ include 'app/views/layout/header.php';
             <select class="form-select border-0 w-auto bg-transparent fw-bold">
                 <option>Tipo de deporte</option>
                 <option>Fútbol 7</option>
-                <option>Fútbol 5</option>
+                <option>Fútbol 5</option>xml_error_string
             </select>
             <div class="vr d-none d-lg-block"></div>
             <input type="date" class="form-control border-0 w-auto bg-transparent">
@@ -115,7 +115,7 @@ include 'app/views/layout/header.php';
         <div class="col-md-6">
             <div class="card border-0 shadow rounded-4 overflow-hidden text-white card-torneo">
                 <div class="position-relative">
-                    <img src="<?php echo URL; ?>public/img/cancha_fondo.png" class="card-img" style="height: 250px; object-fit: cover; filter: brightness(0.4);">
+                    <img src="<?php echo URL; ?>public/img/noticia1.jpeg" class="card-img" style="height: 250px; object-fit: cover; filter: brightness(0.4);">
                     <div class="card-img-overlay d-flex flex-column justify-content-center text-center">
                         <h4 class="fw-bold">Torneo Apertura 2026</h4>
                         <p class="mb-0">Fútbol 7 - Masculino</p>
