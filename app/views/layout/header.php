@@ -95,7 +95,9 @@
                 
                 <div class="d-flex">
                     <?php if(!isset($_SESSION['user_id'])): ?>
-                        <a href="<?php echo URL; ?>app/views/auth/login.php" class="btn btn-patos px-4 shadow-sm">Iniciar Sesión</a>
+                        <a href="<?php echo URL; ?>auth/login" class="btn btn-outline-success border-2 fw-bold rounded-pill px-4">
+    <i class="bi bi-person-circle"></i> Iniciar Sesión
+</a>
                     <?php else: ?>
                         <div class="dropdown">
                             <button class="btn btn-outline-light dropdown-toggle rounded-pill px-3 me-2" type="button" data-bs-toggle="dropdown">

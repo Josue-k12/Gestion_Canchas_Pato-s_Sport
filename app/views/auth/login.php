@@ -1,6 +1,5 @@
 <?php 
-// 1. Cargamos la configuración para obtener la constante URL
-require_once '../../config/config.php'; 
+
 ?>
 <!DOCTYPE html>
 <html lang="es">

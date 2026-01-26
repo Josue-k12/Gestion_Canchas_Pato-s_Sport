@@ -499,27 +499,41 @@ if ($rol !== 'invitado') {
     include 'app/views/layout/header.php'; 
 ?>
 
-<section id="inicio" class="hero-section">
+<section id="inicio" class="hero-section" style="
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('<?php echo URL; ?>public/img/cancha_fondo.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 80vh; /* Esto define el tamaño de la imagen */
+    display: flex;
+    align-items: center;
+    margin-top: -20px; /* Ajuste para que suba un poco */
+">
     <div class="container text-center text-white">
         <h1 class="display-4 fw-bold">Tu Cancha, Tu Juego.</h1>
         <h2 class="display-6 mb-4">Reserva Profesional.</h2>
         
-        <div class="bg-white p-3 rounded-pill shadow-lg mt-4 d-flex flex-wrap justify-content-center gap-2 mx-auto buscador-container">
-            <select class="form-select border-0 w-auto bg-transparent fw-bold">
-                <option>Tipo de deporte</option>
+        <div class="bg-white p-3 rounded-pill shadow-lg mt-4 d-flex flex-wrap justify-content-center gap-2 mx-auto" style="max-width: 900px;">
+            <select class="form-select border-0 w-auto bg-transparent fw-bold text-dark">
+                <option selected disabled>Tipo de deporte</option>
                 <option>Fútbol 7</option>
                 <option>Fútbol 5</option>
             </select>
-            <div class="vr d-none d-lg-block"></div>
-            <input type="date" class="form-control border-0 w-auto bg-transparent">
-            <div class="vr d-none d-lg-block"></div>
-            <select class="form-select border-0 w-auto bg-transparent fw-bold">
-                <option>Horario</option>
+            
+            <div class="vr d-none d-lg-block text-dark"></div>
+            
+            <input type="date" class="form-control border-0 w-auto bg-transparent text-dark">
+            
+            <div class="vr d-none d-lg-block text-dark"></div>
+            
+            <select class="form-select border-0 w-auto bg-transparent fw-bold text-dark">
+                <option selected disabled>Horario</option>
                 <option>Mañana</option>
                 <option>Tarde</option>
                 <option>Noche</option>
             </select>
-            <button class="btn btn-patos rounded-pill px-4 fw-bold">Buscar disponibilidad</button>
+            
+            <button class="btn btn-success rounded-pill px-4 fw-bold">Buscar disponibilidad</button>
         </div>
     </div>
 </section>
@@ -560,7 +574,7 @@ if ($rol !== 'invitado') {
                     <div class="row g-4">
                         <div class="col-md-4">
                             <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
-                                <img src="<?php echo URL; ?>public/img/noticia1.png" class="card-img-top" style="height: 200px; object-fit: cover;">
+                                <img src="<?php echo URL; ?>public/img/noticia1.jpeg" class="card-img-top" style="height: 200px; object-fit: cover;">
                                 <div class="card-body">
                                     <p class="text-muted small mb-2"><i class="bi bi-calendar3"></i> 07/01/2026</p>
                                     <h5 class="fw-bold h6">Mantenimiento de Césped</h5>
@@ -570,7 +584,7 @@ if ($rol !== 'invitado') {
                         </div>
                         <div class="col-md-4">
                             <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
-                                <img src="<?php echo URL; ?>public/img/noticia2.png" class="card-img-top" style="height: 200px; object-fit: cover;">
+                                <img src="<?php echo URL; ?>public/img/noticia2.jpeg" class="card-img-top" style="height: 200px; object-fit: cover;">
                                 <div class="card-body">
                                     <p class="text-muted small mb-2"><i class="bi bi-calendar3"></i> 05/01/2026</p>
                                     <h5 class="fw-bold h6">Nueva Iluminación LED</h5>
@@ -580,7 +594,7 @@ if ($rol !== 'invitado') {
                         </div>
                         <div class="col-md-4">
                             <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
-                                <img src="<?php echo URL; ?>public/img/noticia3.png" class="card-img-top" style="height: 200px; object-fit: cover;">
+                                <img src="<?php echo URL; ?>public/img/noticia3.jpeg" class="card-img-top" style="height: 200px; object-fit: cover;">
                                 <div class="card-body">
                                     <p class="text-muted small mb-2"><i class="bi bi-calendar3"></i> 01/01/2026</p>
                                     <h5 class="fw-bold h6">Torneo Relámpago</h5>
@@ -607,7 +621,7 @@ if ($rol !== 'invitado') {
         <div class="col-md-6">
             <div class="card border-0 shadow rounded-4 overflow-hidden text-white card-torneo">
                 <div class="position-relative">
-                    <img src="<?php echo URL; ?>public/img/cancha_fondo.png" class="card-img" style="height: 250px; object-fit: cover; filter: brightness(0.4);">
+                    <img src="<?php echo URL; ?>/public/img/torneo1.jpeg" class="card-img" style="height: 250px; object-fit: cover; filter: brightness(0.4);">
                     <div class="card-img-overlay d-flex flex-column justify-content-center text-center">
                         <h4 class="fw-bold">Torneo Apertura 2026</h4>
                         <p class="mb-0">Fútbol 7 - Masculino</p>
@@ -621,7 +635,7 @@ if ($rol !== 'invitado') {
         <div class="col-md-6">
             <div class="card border-0 shadow rounded-4 overflow-hidden text-white card-torneo">
                 <div class="position-relative">
-                    <img src="<?php echo URL; ?>public/img/torneo2.png" class="card-img" style="height: 250px; object-fit: cover; filter: brightness(0.4);">
+                    <img src="<?php echo URL; ?>public/img/torneo2.jpeg" class="card-img" style="height: 250px; object-fit: cover; filter: brightness(0.4);">
                     <div class="card-img-overlay d-flex flex-column justify-content-center text-center">
                         <h4 class="fw-bold">Liga Empresarial</h4>
                         <p class="mb-0">Fútbol 5 - Libre</p>
@@ -650,7 +664,42 @@ if ($rol !== 'invitado') {
         transform: scale(1.02);
     }
 </style>
+<section id="contacto" class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-5">
+                <h3 class="fw-bold mb-4">Contáctanos</h3>
+                <div class="card border-0 shadow-sm p-4 rounded-4">
+                    <p class="mb-2"><strong><i class="bi bi-person-fill text-success"></i> Propietario:</strong> Milton Montaluisa</p>
+                    
+                    <p class="mb-3">
+                        <strong><i class="bi bi-whatsapp text-success"></i> WhatsApp:</strong><br>
+                        <a href="https://wa.me/593984577224?text=Hola,%20me%20gustaría%20reservar%20la%20cancha" target="_blank" class="btn btn-success btn-sm mt-1">
+                            <i class="bi bi-whatsapp"></i> Enviar Mensaje
+                        </a>
+                    </p>
 
+                    <p class="mb-2"><strong><i class="bi bi-telephone-fill text-success"></i> Teléfono:</strong> <a href="tel:+593984577224" class="text-decoration-none text-dark">+593 98 457 7224</a></p>
+                    <p class="mb-2"><strong><i class="bi bi-geo-alt-fill text-success"></i> Dirección:</strong> San Jose, Latacunga</p>
+                    <p class="mb-0"><strong><i class="bi bi-clock-fill text-success"></i> Horario:</strong> 08:00 AM - 11:00 PM</p>
+                    
+                    <a href="https://www.google.com/maps/search/?api=1&query=Cancha+sintetica+Pato+sport+Latacunga&query_place_id=ChIJG0Dr1Tph1JERQWvHAGyIzg0" target="_blank" class="btn btn-primary w-100 rounded-pill mt-3">
+                        <i class="bi bi-geo-alt"></i> Cómo llegar (Google Maps)
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                <div class="rounded-4 overflow-hidden shadow-sm" style="height: 350px;">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.23123456789!2d-78.5963148!3d-0.9045925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d4613ad5eb401b%3A0x0dad886c00076b41!2sCancha%20sint%C3%A9tica%20%22Pato's%20sport%22!5e0!3m2!1ses!2sec!4v1715800000000!5m2!1ses!2sec" 
+                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 <?php 
     include 'app/views/layout/footer.php'; 
 }
