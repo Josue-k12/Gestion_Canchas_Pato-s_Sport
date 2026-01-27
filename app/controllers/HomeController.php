@@ -34,7 +34,7 @@ class HomeController {
 
     private function paginaPublica() {
         // Cargar la página principal pública
-        include 'app/views/home/pagina_publica.php';
+        include 'app/views/home/index.php';
     }
 
     private function dashboardAdmin() {

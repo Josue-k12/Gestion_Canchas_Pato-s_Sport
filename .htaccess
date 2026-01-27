@@ -1,5 +1,11 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteRule ^$ public/ [L]
-    RewriteRule (.*) public/$1 [L]
+
+    # Si el archivo o carpeta existe físicamente (imágenes, css, js), úsalo
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Si NO existe, simplemente deja que index.php maneje la URL
+    # Quitamos el ?url=$1 para que no interfiera con tus parámetros c y a
+    RewriteRule ^(.*)$ index.php [L,QSA]
 </IfModule>

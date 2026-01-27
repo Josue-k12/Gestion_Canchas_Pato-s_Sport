@@ -1,6 +1,3 @@
-<?php 
-
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -22,14 +19,13 @@
 
         .login-container { height: 100vh; display: flex; overflow: hidden; }
 
-        /* Lado izquierdo: Imagen - RUTA CORREGIDA EN CSS */
+        /* Fondo de la imagen de login */
         .login-image {
             background: url('<?php echo URL; ?>public/img/login_bg.png') center/cover no-repeat;
             width: 55%;
             position: relative;
         }
 
-        /* Lado derecho: Formulario */
         .login-form-section {
             width: 45%;
             background: white;
@@ -43,6 +39,8 @@
         
         .btn-volver {
             transition: transform 0.3s ease, color 0.3s ease;
+            text-decoration: none;
+            color: var(--oscuro-patos);
         }
         
         .btn-volver:hover {
@@ -60,13 +58,14 @@
             font-weight: bold;
             width: 100%;
             transition: 0.3s;
+            border-radius: 5px;
         }
 
-        .btn-ingresar:hover { background-color: #218838; color: white; }
+        .btn-ingresar:hover { background-color: #218838; color: white; transform: translateY(-2px); }
 
         .input-group-text { background: transparent; border-right: none; }
         .form-control { border-left: none; }
-        .form-control:focus { border-color: #dee2e6; box-shadow: none; }
+        .form-control:focus { border-color: var(--verde-patos); box-shadow: none; }
 
         @media (max-width: 992px) {
             .login-image { display: none; }
@@ -80,8 +79,7 @@
     <div class="login-image"></div>
 
     <div class="login-form-section">
-        <!-- Botón para volver al inicio -->
-        <a href="<?php echo URL; ?>index.php" class="btn btn-link text-dark position-absolute" style="top: 20px; left: 20px; text-decoration: none; font-size: 1.2rem;" title="Volver al inicio">
+        <a href="<?php echo URL; ?>index.php" class="btn-volver position-absolute" style="top: 20px; left: 20px; font-size: 1.1rem;" title="Volver al inicio">
             <i class="bi bi-arrow-left-circle"></i> Volver al inicio
         </a>
         
@@ -90,10 +88,10 @@
             <h2 class="fw-bold mb-1">Bienvenido de Nuevo</h2>
             <p class="text-muted mb-4">Accede a tu panel de gestión.</p>
 
-            <form action="<?php echo URL; ?>app/controllers/AuthController.php?action=login" method="POST">
+            <form action="<?php echo URL; ?>index.php?c=Auth&a=login" method="POST">
                 
                 <div class="text-start mb-3">
-                    <label class="form-label small fw-bold">Usuario (Email)</label>
+                    <label class="form-label small fw-bold">Correo Electrónico</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-person"></i></span>
                         <input type="email" name="usuario" class="form-control" placeholder="admin@patos.com" required>
@@ -118,24 +116,25 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-ingresar rounded-1 shadow-sm mb-3">INGRESAR</button>
+                <button type="submit" class="btn btn-ingresar shadow-sm mb-3">INGRESAR</button>
             </form>
 
             <p class="small text-muted mt-3">
                 ¿No tienes una cuenta? <br>
-                <span class="text-dark fw-bold">Contacta a la administración del complejo para solicitar acceso.</span>
+                <span class="text-dark fw-bold">Contacta a la administración para solicitar acceso.</span>
             </p>
         </div>
     </div>
 </div>
 
 <script>
+    // Lógica para mostrar/ocultar contraseña
     const togglePassword = document.querySelector('#togglePassword');
-    const password = document.querySelector('#password');
+    const passwordField = document.querySelector('#password');
 
     togglePassword.addEventListener('click', function () {
-        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-        password.setAttribute('type', type);
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
         this.classList.toggle('bi-eye');
         this.classList.toggle('bi-eye-slash');
     });
