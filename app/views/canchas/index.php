@@ -36,11 +36,11 @@
 
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="far fa-user-circle fa-lg"></i>
                         <span class="d-none d-md-inline ml-2"><?php echo explode(' ', $_SESSION['user_nombre'])[0]; ?></span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <div class="dropdown-header text-center">
                             <h5><?php echo $_SESSION['user_nombre']; ?></h5>
                             <span class="badge badge-<?php echo $_SESSION['rol'] === 'admin' ? 'danger' : ($_SESSION['rol'] === 'encargado' ? 'warning' : 'success'); ?>">
@@ -95,7 +95,7 @@
                             <div class="col-md-4">
                                 <div class="card">
                                     <?php if(!empty($cancha['imagen'])): ?>
-                                    <img src="<?php echo URL . $cancha['imagen']; ?>" class="card-img-top" alt="<?php echo $cancha['nombre']; ?>">
+                                    <img src="<?php echo URL; ?>public/img/canchas/<?php echo $cancha['imagen']; ?>" class="card-img-top" alt="<?php echo $cancha['nombre']; ?>" style="height: 200px; object-fit: cover;">
                                     <?php else: ?>
                                     <div class="card-img-top bg-secondary text-white text-center py-5">
                                         <i class="fas fa-futbol fa-5x"></i>
@@ -104,11 +104,10 @@
                                     <div class="card-body">
                                         <h5 class="card-title"><?php echo $cancha['nombre']; ?></h5>
                                         <p class="card-text">
-                                            <strong>Tipo:</strong> <?php echo ucfirst($cancha['tipo']); ?><br>
-                                            <strong>Capacidad:</strong> <?php echo $cancha['capacidad']; ?> personas<br>
+                                            <strong>Tipo:</strong> <?php echo ucfirst($cancha['tipo'] ?? 'Fútbol'); ?><br>
                                             <strong>Precio:</strong> $<?php echo number_format($cancha['precio_hora'], 2); ?>/hora<br>
                                             <strong>Estado:</strong> 
-                                            <span class="badge badge-<?php echo $cancha['estado'] === 'activa' ? 'success' : 'danger'; ?>">
+                                            <span class="badge badge-<?php echo $cancha['estado'] === 'disponible' ? 'success' : 'warning'; ?>">
                                                 <?php echo ucfirst($cancha['estado']); ?>
                                             </span>
                                         </p>

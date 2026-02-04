@@ -21,7 +21,8 @@ class CalendarioController {
         // Obtener reservas según el rol
         $reservaModel = new Reserva();
         
-        if ($rol === 'admin' || $rol === 'encargado') {
+        // Roles: 1=admin, 3=encargado
+        if ($rol === 1 || $rol === 3) {
             // Admin y encargado ven todas las reservas
             $reservas = $reservaModel->obtenerTodas();
         } else {
@@ -50,7 +51,7 @@ class CalendarioController {
 
         $reservaModel = new Reserva();
         
-        if ($rol === 'admin' || $rol === 'encargado') {
+        if ($rol === 1 || $rol === 3) {
             $reservas = $reservaModel->obtenerTodas();
         } else {
             $reservas = $reservaModel->obtenerPorUsuario($userId);
@@ -121,7 +122,7 @@ class CalendarioController {
         $rol = $_SESSION['rol'];
         $userId = $_SESSION['user_id'];
 
-        if ($rol === 'cliente' && $reserva['usuario_id'] != $userId) {
+        if ($rol === 2 && $reserva['usuario_id'] != $userId) {
             $_SESSION['error'] = 'No tienes permiso para ver esta reserva';
             header("Location: " . URL . "index.php?c=Calendario&a=index");
             exit();

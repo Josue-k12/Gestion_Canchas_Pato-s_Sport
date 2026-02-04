@@ -36,11 +36,11 @@
 
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="far fa-user-circle fa-lg"></i>
                         <span class="d-none d-md-inline ml-2"><?php echo explode(' ', $_SESSION['user_nombre'])[0]; ?></span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <div class="dropdown-header text-center">
                             <h5><?php echo $_SESSION['user_nombre']; ?></h5>
                             <span class="badge badge-<?php echo $_SESSION['rol'] === 'admin' ? 'danger' : ($_SESSION['rol'] === 'encargado' ? 'warning' : 'success'); ?>">

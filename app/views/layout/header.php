@@ -15,21 +15,14 @@
             --oscuro-patos: #121821;
         }
 
-        /* EFECTO DE DESPLAZAMIENTO SUAVE */
-        html {
-            scroll-behavior: smooth;
-        }
-
+        html { scroll-behavior: smooth; }
         .bg-patos-dark { background-color: var(--oscuro-patos); }
-        
         .nav-link { 
             color: rgba(255,255,255,0.8) !important; 
             margin-right: 15px;
             transition: 0.3s;
         }
-        
         .nav-link:hover { color: var(--verde-patos) !important; }
-
         .btn-patos { 
             background-color: var(--verde-patos); 
             color: white; 
@@ -38,16 +31,14 @@
             border: none;
             transition: 0.3s;
         }
-        
         .btn-patos:hover { 
             background-color: #0d9682; 
             transform: scale(1.05);
             color: white;
         }
-
         .hero-section {
             background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), 
-                        url('<?php echo URL; ?>public/img/cancha_fondo.png');
+                        url('<?php echo URL; ?>public/img/cancha_fondo.jpeg');
             background-size: cover;
             background-position: center;
             height: 500px;
@@ -57,15 +48,10 @@
             color: white;
             text-align: center;
         }
-
-        .buscador-container { max-width: 850px; margin: 0 auto; }
-        
         .brand-text {
             letter-spacing: 1px;
             font-size: 1.5rem;
         }
-
-        /* Compensación para que el menú fijo no tape los títulos al bajar */
         section, div[id], footer[id] {
             scroll-margin-top: 90px;
         }
@@ -75,7 +61,7 @@
 
     <nav class="navbar navbar-expand-lg bg-patos-dark py-3 sticky-top">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="<?php echo URL; ?>#inicio">
+            <a class="navbar-brand d-flex align-items-center" href="<?php echo URL; ?>index.php?c=Home&a=index">
                 <img src="<?php echo URL; ?>public/img/logo_patos.png" alt="Logo" style="height: 50px; width: auto;">
                 <span class="ms-2 fw-bold text-white brand-text">PATO'S SPORT</span>
             </a>
@@ -86,7 +72,7 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav mx-auto">
-                    <a class="nav-link" href="<?php echo URL; ?>#inicio">Inicio</a>
+                    <a class="nav-link" href="<?php echo URL; ?>index.php?c=Home&a=index">Inicio</a>
                     <a class="nav-link" href="#servicios">Servicios</a>
                     <a class="nav-link" href="#noticias">Noticias</a>
                     <a class="nav-link" href="#torneos">Torneos</a>
@@ -95,18 +81,21 @@
                 
                 <div class="d-flex">
                     <?php if(!isset($_SESSION['user_id'])): ?>
-                        <a href="<?php echo URL; ?>auth/login" class="btn btn-outline-success border-2 fw-bold rounded-pill px-4">
-    <i class="bi bi-person-circle"></i> Iniciar Sesión
-</a>
+                        <a href="<?php echo URL; ?>index.php?c=Auth&a=register" class="btn btn-patos fw-bold rounded-pill px-4 me-2">
+                            <i class="bi bi-person-plus"></i> Registrarse
+                        </a>
+                        <a href="<?php echo URL; ?>index.php?c=Auth&a=login" class="btn btn-outline-success border-2 fw-bold rounded-pill px-4">
+                            <i class="bi bi-person-circle"></i> Iniciar Sesión
+                        </a>
                     <?php else: ?>
                         <div class="dropdown">
                             <button class="btn btn-outline-light dropdown-toggle rounded-pill px-3 me-2" type="button" data-bs-toggle="dropdown">
                                 <i class="bi bi-person-circle me-1"></i> <?php echo explode(' ', $_SESSION['user_nombre'])[0]; ?>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
-                                <li><a class="dropdown-item py-2" href="#"><i class="bi bi-gear me-2"></i>Mi Perfil</a></li>
+                                <li><a class="dropdown-item py-2" href="<?php echo URL; ?>index.php?c=Home&a=index"><i class="bi bi-speedometer2 me-2"></i>Mi Dashboard</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item py-2 text-danger" href="<?php echo URL; ?>app/controllers/AuthController.php?action=logout"><i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión</a></li>
+                                <li><a class="dropdown-item py-2 text-danger" href="<?php echo URL; ?>index.php?c=Auth&a=logout"><i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión</a></li>
                             </ul>
                         </div>
                     <?php endif; ?>

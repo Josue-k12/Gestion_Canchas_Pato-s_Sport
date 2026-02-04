@@ -102,18 +102,17 @@
 
             <section class="content">
                 <div class="container-fluid">
-                    <!-- Estadísticas -->
                     <div class="row">
                         <div class="col-lg-3 col-6">
                             <div class="small-box bg-info">
                                 <div class="inner">
-                                    <h3><?php echo $totalReservas; ?></h3>
-                                    <p>Reservas Totales</p>
+                                    <h3><?php echo $totalAlquileres; ?></h3>
+                                    <p>Alquileres Totales</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fas fa-calendar-check"></i>
                                 </div>
-                                <a href="<?php echo URL; ?>index.php?c=Reserva&a=index" class="small-box-footer">
+                                <a href="<?php echo URL; ?>index.php?c=Alquiler&a=index" class="small-box-footer">
                                     Ver más <i class="fas fa-arrow-circle-right"></i>
                                 </a>
                             </div>
@@ -152,23 +151,22 @@
                         <div class="col-lg-3 col-6">
                             <div class="small-box bg-danger">
                                 <div class="inner">
-                                    <h3>$12,450</h3>
+                                    <h3>$<?php echo number_format($ingresosDelMes, 2); ?></h3>
                                     <p>Ingresos del Mes</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fas fa-dollar-sign"></i>
                                 </div>
-                                <a href="#" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
+                                <a href="<?php echo URL; ?>index.php?c=Reporte&a=index" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Tabla de reservas recientes -->
                     <div class="row">
                         <div class="col-md-8">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title"><i class="fas fa-list"></i> Reservas Recientes</h3>
+                                    <h3 class="card-title"><i class="fas fa-list"></i> Alquileres Recientes</h3>
                                 </div>
                                 <div class="card-body p-0">
                                     <table class="table table-striped">
@@ -177,28 +175,47 @@
                                                 <th>Cliente</th>
                                                 <th>Cancha</th>
                                                 <th>Fecha</th>
+                                                <th>Horario</th>
                                                 <th>Estado</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php if(!empty($reservasRecientes)): ?>
-                                                <?php foreach($reservasRecientes as $reserva): ?>
+                                            <?php if(!empty($alquileresRecientes)): ?>
+                                                <?php foreach($alquileresRecientes as $alquiler): ?>
                                                 <tr>
-                                                    <td><?php echo $reserva['cliente_nombre'] ?? 'N/A'; ?></td>
-                                                    <td><?php echo $reserva['cancha_nombre'] ?? 'N/A'; ?></td>
-                                                    <td><?php echo date('d/m/Y', strtotime($reserva['fecha'])); ?></td>
+                                                    <td><?php echo $alquiler['usuario_nombre'] ?? 'N/A'; ?></td>
+                                                    <td><?php echo $alquiler['cancha_nombre'] ?? 'N/A'; ?></td>
+                                                    <td><?php echo date('d/m/Y', strtotime($alquiler['alquiler_fecha'])); ?></td>
+                                                    <td><?php echo date('H:i', strtotime($alquiler['alquiler_hora_inicial'])); ?> - <?php echo date('H:i', strtotime($alquiler['alquiler_hora_final'])); ?></td>
                                                     <td>
-                                                        <span class="badge badge-<?php 
-                                                            echo $reserva['estado'] === 'confirmada' ? 'success' : 
-                                                                ($reserva['estado'] === 'pendiente' ? 'warning' : 'danger'); 
-                                                        ?>">
-                                                            <?php echo ucfirst($reserva['estado']); ?>
+                                                        <?php
+                                                        $badgeClass = 'secondary';
+                                                        switch(strtolower($alquiler['estado_nombre'])) {
+                                                            case 'registrado':
+                                                                $badgeClass = 'info';
+                                                                break;
+                                                            case 'aprobado':
+                                                                $badgeClass = 'success';
+                                                                break;
+                                                            case 'finalizado':
+                                                                $badgeClass = 'primary';
+                                                                break;
+                                                            case 'cancelado':
+                                                                $badgeClass = 'danger';
+                                                                break;
+                                                            case 'anulado':
+                                                                $badgeClass = 'dark';
+                                                                break;
+                                                        }
+                                                        ?>
+                                                        <span class="badge badge-<?php echo $badgeClass; ?>">
+                                                            <?php echo ucfirst($alquiler['estado_nombre']); ?>
                                                         </span>
                                                     </td>
                                                 </tr>
                                                 <?php endforeach; ?>
                                             <?php else: ?>
-                                                <tr><td colspan="4" class="text-center">No hay reservas recientes</td></tr>
+                                                <tr><td colspan="5" class="text-center">No hay alquileres recientes</td></tr>
                                             <?php endif; ?>
                                         </tbody>
                                     </table>
@@ -208,13 +225,13 @@
 
                         <div class="col-md-4">
                             <div class="card">
-                                <div class="card-header">
+                                <div class="card-header bg-primary">
                                     <h3 class="card-title"><i class="fas fa-bolt"></i> Acciones Rápidas</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="d-grid gap-2">
-                                        <a href="<?php echo URL; ?>index.php?c=Reserva&a=crear" class="btn btn-primary btn-block mb-2">
-                                            <i class="fas fa-plus-circle"></i> Nueva Reserva
+                                        <a href="<?php echo URL; ?>index.php?c=Alquiler&a=crear" class="btn btn-primary btn-block mb-2">
+                                            <i class="fas fa-plus-circle"></i> Nuevo Alquiler
                                         </a>
                                         <a href="<?php echo URL; ?>index.php?c=Cancha&a=crear" class="btn btn-success btn-block mb-2">
                                             <i class="fas fa-futbol"></i> Añadir Cancha
@@ -222,10 +239,73 @@
                                         <a href="<?php echo URL; ?>index.php?c=Usuario&a=crear" class="btn btn-info btn-block mb-2">
                                             <i class="fas fa-user-plus"></i> Nuevo Usuario
                                         </a>
-                                        <a href="<?php echo URL; ?>index.php?c=Calendario&a=index" class="btn btn-warning btn-block">
-                                            <i class="fas fa-calendar"></i> Ver Calendario
+                                        <a href="<?php echo URL; ?>index.php?c=Alquiler&a=index" class="btn btn-warning btn-block">
+                                            <i class="fas fa-list"></i> Listar Alquileres
                                         </a>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-warning">
+                                    <h3 class="card-title"><i class="fas fa-clock"></i> Pendientes por Aprobar (<?php echo count($alquileresPendientes); ?>)</h3>
+                                </div>
+                                <div class="card-body">
+                                    <?php if(!empty($alquileresPendientes)): ?>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Cliente</th>
+                                                    <th>Cancha</th>
+                                                    <th>Fecha</th>
+                                                    <th>Hora Inicio</th>
+                                                    <th>Hora Fin</th>
+                                                    <th>Valor</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach($alquileresPendientes as $alquiler): ?>
+                                                <tr>
+                                                    <td><strong><?php echo $alquiler['usuario_nombre']; ?></strong></td>
+                                                    <td><?php echo $alquiler['cancha_nombre']; ?></td>
+                                                    <td><?php echo date('d/m/Y', strtotime($alquiler['alquiler_fecha'])); ?></td>
+                                                    <td><?php echo date('H:i', strtotime($alquiler['alquiler_hora_inicial'])); ?></td>
+                                                    <td><?php echo date('H:i', strtotime($alquiler['alquiler_hora_final'])); ?></td>
+                                                    <td><strong>$<?php echo number_format($alquiler['alquiler_valor'], 2); ?></strong></td>
+                                                    <td>
+                                                        <a href="<?php echo URL; ?>index.php?c=Alquiler&a=aprobar&id=<?php echo $alquiler['alquiler_id']; ?>" class="btn btn-success btn-sm" onclick="return confirm('¿Aprobar este alquiler?')">
+                                                            <i class="fas fa-check"></i> Aprobar
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <?php else: ?>
+                                    <div class="alert alert-success">
+                                        <i class="fas fa-check-circle"></i> ¡Excelente! No hay alquileres pendientes de aprobación.
+                                    </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-info">
+                                    <h3 class="card-title"><i class="fas fa-chart-line"></i> Progreso de Uso por Meses (Últimos 12 meses)</h3>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="chartProgreso" style="min-height: 250px; height: 250px; max-height: 250px;"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -246,5 +326,84 @@
     <script src="<?php echo URL; ?>public/adminlte/plugins/jquery/jquery.min.js"></script>
     <script src="<?php echo URL; ?>public/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+    <script src="<?php echo URL; ?>public/adminlte/plugins/chart.js/Chart.min.js"></script>
+    <script>
+        // Gráfico de progreso de uso por meses
+        const ctx = document.getElementById('chartProgreso').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: <?php echo json_encode($datosGrafico['labels']); ?>,
+                datasets: [
+                    {
+                        label: 'Horas de uso',
+                        data: <?php echo json_encode($datosGrafico['horas']); ?>,
+                        borderColor: '#0fb29a',
+                        backgroundColor: 'rgba(15, 178, 154, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 2,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#0fb29a',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2
+                    },
+                    {
+                        label: 'Ingresos ($)',
+                        data: <?php echo json_encode($datosGrafico['ingresos']); ?>,
+                        borderColor: '#dc3545',
+                        backgroundColor: 'rgba(220, 53, 69, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 2,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#dc3545',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        yAxisID: 'y1'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            font: { size: 12 }
+                        }
+                    },
+                    title: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: {
+                            display: true,
+                            text: 'Horas'
+                        }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        title: {
+                            display: true,
+                            text: 'Ingresos ($)'
+                        },
+                        grid: {
+                            drawOnChartArea: false,
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>

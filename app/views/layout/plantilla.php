@@ -97,11 +97,11 @@
             <ul class="navbar-nav ml-auto">
                 <!-- Notifications Dropdown Menu -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
+                    <a class="nav-link dropdown-toggle" href="#" id="notificationsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="far fa-bell"></i>
                         <span class="badge badge-warning navbar-badge">3</span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" aria-labelledby="notificationsDropdown">
                         <span class="dropdown-item dropdown-header">3 Notificaciones</span>
                         <div class="dropdown-divider"></div>
                         <a href="#" class="dropdown-item">
@@ -125,13 +125,13 @@
 
                 <!-- User Account Menu -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="far fa-user-circle fa-lg"></i>
                         <span class="d-none d-md-inline ml-2">
                             <?php echo isset($_SESSION['user_nombre']) ? explode(' ', $_SESSION['user_nombre'])[0] : 'Usuario'; ?>
                         </span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <div class="dropdown-header text-center">
                             <h5><?php echo isset($_SESSION['user_nombre']) ? $_SESSION['user_nombre'] : 'Usuario'; ?></h5>
                             <span class="badge badge-<?php 

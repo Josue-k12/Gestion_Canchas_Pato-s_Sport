@@ -54,17 +54,16 @@ class Cancha {
 
     public function crear($datos) {
         try {
-            $query = "INSERT INTO canchas (nombre, tipo, capacidad, precio_hora, descripcion, estado)
-                      VALUES (:nombre, :tipo, :capacidad, :precio_hora, :descripcion, :estado)";
+            $query = "INSERT INTO canchas (nombre, tipo, precio_hora, estado, imagen)
+                      VALUES (:nombre, :tipo, :precio_hora, :estado, :imagen)";
             
             $stmt = $this->db->prepare($query);
             
             $stmt->bindParam(':nombre', $datos['nombre']);
             $stmt->bindParam(':tipo', $datos['tipo']);
-            $stmt->bindParam(':capacidad', $datos['capacidad']);
             $stmt->bindParam(':precio_hora', $datos['precio_hora']);
-            $stmt->bindParam(':descripcion', $datos['descripcion']);
             $stmt->bindParam(':estado', $datos['estado']);
+            $stmt->bindParam(':imagen', $datos['imagen']);
             
             return $stmt->execute();
         } catch (PDOException $e) {
@@ -78,10 +77,9 @@ class Cancha {
             $query = "UPDATE canchas SET 
                       nombre = :nombre,
                       tipo = :tipo,
-                      capacidad = :capacidad,
                       precio_hora = :precio_hora,
-                      descripcion = :descripcion,
-                      estado = :estado
+                      estado = :estado,
+                      imagen = :imagen
                       WHERE id = :id";
             
             $stmt = $this->db->prepare($query);
@@ -89,10 +87,9 @@ class Cancha {
             $stmt->bindParam(':id', $datos['id']);
             $stmt->bindParam(':nombre', $datos['nombre']);
             $stmt->bindParam(':tipo', $datos['tipo']);
-            $stmt->bindParam(':capacidad', $datos['capacidad']);
             $stmt->bindParam(':precio_hora', $datos['precio_hora']);
-            $stmt->bindParam(':descripcion', $datos['descripcion']);
             $stmt->bindParam(':estado', $datos['estado']);
+            $stmt->bindParam(':imagen', $datos['imagen']);
             
             return $stmt->execute();
         } catch (PDOException $e) {

@@ -37,11 +37,11 @@
 
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
+                    <a class="nav-link dropdown-toggle" href="#" id="notificationsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="far fa-bell"></i>
                         <span class="badge badge-danger navbar-badge"><?php echo count($reservasPendientes); ?></span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" aria-labelledby="notificationsDropdown">
                         <span class="dropdown-item dropdown-header"><?php echo count($reservasPendientes); ?> Reservas Pendientes</span>
                         <div class="dropdown-divider"></div>
                         <a href="<?php echo URL; ?>index.php?c=Reserva&a=index" class="dropdown-item">
@@ -51,11 +51,11 @@
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="far fa-user-circle fa-lg"></i>
                         <span class="d-none d-md-inline ml-2"><?php echo explode(' ', $_SESSION['user_nombre'])[0]; ?></span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <div class="dropdown-header text-center">
                             <h5><?php echo $_SESSION['user_nombre']; ?></h5>
                             <span class="badge badge-warning">Encargado</span>
