@@ -34,6 +34,17 @@ class Usuario {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    // Obtener usuarios por rol
+    public function obtenerPorRol($rolId) {
+        $query = "SELECT u.* FROM " . $this->tabla . " u 
+                  WHERE u.rol_id = :rol_id 
+                  ORDER BY u.nombre ASC";
+        $stmt = $this->conexion->prepare($query);
+        $stmt->bindParam(':rol_id', $rolId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     // Crear nuevo usuario
     public function crear($datos) {
         $query = "INSERT INTO " . $this->tabla . " 

@@ -55,7 +55,8 @@ class PartidoController {
             session_start();
         }
         
-        if (!isset($_SESSION['user_id']) || ($_SESSION['rol'] !== 'admin' && $_SESSION['rol'] !== 'encargado')) {
+        // Roles: 1=admin, 3=encargado
+        if (!isset($_SESSION['user_id']) || ($_SESSION['rol'] !== 1 && $_SESSION['rol'] !== 3)) {
             header("Location: " . URL . "index.php");
             exit();
         }
@@ -111,7 +112,7 @@ class PartidoController {
             session_start();
         }
         
-        if (!isset($_SESSION['user_id']) || ($_SESSION['rol'] !== 'admin' && $_SESSION['rol'] !== 'encargado')) {
+        if (!isset($_SESSION['user_id']) || ($_SESSION['rol'] !== 1 && $_SESSION['rol'] !== 3)) {
             header("Location: " . URL . "index.php");
             exit();
         }
@@ -205,7 +206,7 @@ class PartidoController {
             session_start();
         }
         
-        if (!isset($_SESSION['user_id']) || $_SESSION['rol'] !== 'admin') {
+        if (!isset($_SESSION['user_id']) || $_SESSION['rol'] !== 1) {
             header("Location: " . URL . "index.php");
             exit();
         }

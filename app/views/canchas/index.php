@@ -18,6 +18,68 @@
         .brand-link { background-color: var(--oscuro-patos) !important; }
         .nav-link.active { background-color: var(--verde-patos) !important; }
         .btn-primary { background-color: var(--verde-patos) !important; border-color: var(--verde-patos) !important; }
+        
+        /* Estilos responsivos para móviles */
+        @media (max-width: 991.98px) {
+            .main-header .navbar-nav {
+                flex-direction: row !important;
+            }
+            .main-header .navbar-nav .nav-item {
+                display: flex !important;
+            }
+            .content-wrapper {
+                margin-left: 0 !important;
+            }
+        }
+        
+        @media (max-width: 767px) {
+            .card-header h3 {
+                font-size: 1rem;
+            }
+            
+            /* Tablas responsivas estilo cards */
+            #tablaCanchas thead {
+                display: none;
+            }
+            #tablaCanchas,
+            #tablaCanchas tbody,
+            #tablaCanchas tr,
+            #tablaCanchas td {
+                display: block;
+                width: 100%;
+            }
+            #tablaCanchas tr {
+                margin-bottom: 15px;
+                border: 1px solid #dee2e6;
+                border-radius: 8px;
+                padding: 10px;
+                background: #fff;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            #tablaCanchas td {
+                text-align: right;
+                padding: 8px 10px;
+                position: relative;
+                padding-left: 50%;
+                border: none;
+                border-bottom: 1px solid #eee;
+            }
+            #tablaCanchas td:last-child {
+                border-bottom: none;
+            }
+            #tablaCanchas td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 10px;
+                width: 45%;
+                text-align: left;
+                font-weight: bold;
+                color: #333;
+            }
+            #tablaCanchas td .btn {
+                margin: 2px;
+            }
+        }
     </style>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -36,11 +98,11 @@
 
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="far fa-user-circle fa-lg"></i>
                         <span class="d-none d-md-inline ml-2"><?php echo explode(' ', $_SESSION['user_nombre'])[0]; ?></span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <div class="dropdown-header text-center">
                             <h5><?php echo $_SESSION['user_nombre']; ?></h5>
                             <span class="badge badge-<?php echo $_SESSION['rol'] === 'admin' ? 'danger' : ($_SESSION['rol'] === 'encargado' ? 'warning' : 'success'); ?>">
@@ -95,7 +157,7 @@
                             <div class="col-md-4">
                                 <div class="card">
                                     <?php if(!empty($cancha['imagen'])): ?>
-                                    <img src="<?php echo URL . $cancha['imagen']; ?>" class="card-img-top" alt="<?php echo $cancha['nombre']; ?>">
+                                    <img src="<?php echo URL; ?>public/img/canchas/<?php echo $cancha['imagen']; ?>" class="card-img-top" alt="<?php echo $cancha['nombre']; ?>" style="height: 200px; object-fit: cover;">
                                     <?php else: ?>
                                     <div class="card-img-top bg-secondary text-white text-center py-5">
                                         <i class="fas fa-futbol fa-5x"></i>
@@ -104,11 +166,10 @@
                                     <div class="card-body">
                                         <h5 class="card-title"><?php echo $cancha['nombre']; ?></h5>
                                         <p class="card-text">
-                                            <strong>Tipo:</strong> <?php echo ucfirst($cancha['tipo']); ?><br>
-                                            <strong>Capacidad:</strong> <?php echo $cancha['capacidad']; ?> personas<br>
+                                            <strong>Tipo:</strong> <?php echo ucfirst($cancha['tipo'] ?? 'Fútbol'); ?><br>
                                             <strong>Precio:</strong> $<?php echo number_format($cancha['precio_hora'], 2); ?>/hora<br>
                                             <strong>Estado:</strong> 
-                                            <span class="badge badge-<?php echo $cancha['estado'] === 'activa' ? 'success' : 'danger'; ?>">
+                                            <span class="badge badge-<?php echo $cancha['estado'] === 'disponible' ? 'success' : 'warning'; ?>">
                                                 <?php echo ucfirst($cancha['estado']); ?>
                                             </span>
                                         </p>

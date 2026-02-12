@@ -113,8 +113,8 @@
 
 <!-- jQuery -->
 <script src="<?php echo URL; ?>public/adminlte/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap Bundle -->
-<script src="<?php echo URL; ?>public/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap Bundle con Popper -->
+<script src="<?php echo URL; ?>public/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
 

@@ -24,7 +24,8 @@ class CanchaController {
             session_start();
         }
         
-        if (!isset($_SESSION['user_id']) || ($_SESSION['rol'] !== 'admin' && $_SESSION['rol'] !== 'encargado')) {
+        // Roles: 1=admin, 3=encargado
+        if (!isset($_SESSION['user_id']) || ($_SESSION['rol'] !== 1 && $_SESSION['rol'] !== 3)) {
             header("Location: " . URL . "index.php");
             exit();
         }
@@ -35,11 +36,30 @@ class CanchaController {
             $datos = [
                 'nombre' => $_POST['nombre'],
                 'tipo' => $_POST['tipo'],
-                'capacidad' => $_POST['capacidad'],
                 'precio_hora' => $_POST['precio_hora'],
-                'descripcion' => $_POST['descripcion'] ?? '',
-                'estado' => $_POST['estado'] ?? 'activa'
+                'estado' => $_POST['estado'] ?? 'disponible',
+                'imagen' => ''
             ];
+
+            // Manejar subida de imagen
+            if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+                $directorioDestino = 'public/img/canchas/';
+                $extension = strtolower(pathinfo($_FILES['imagen']['name'], PATHINFO_EXTENSION));
+                $extensionesPermitidas = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp'];
+                
+                if (in_array($extension, $extensionesPermitidas)) {
+                    $nombreArchivo = uniqid('cancha_') . '.' . $extension;
+                    $rutaCompleta = $directorioDestino . $nombreArchivo;
+                    
+                    if (move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaCompleta)) {
+                        $datos['imagen'] = $nombreArchivo;
+                    } else {
+                        $_SESSION['error'] = 'Error al subir la imagen';
+                    }
+                } else {
+                    $_SESSION['error'] = 'Formato de imagen no permitido. Use: JPG, PNG, GIF, WEBP o BMP';
+                }
+            }
 
             if ($canchaModel->crear($datos)) {
                 $_SESSION['mensaje'] = 'Cancha creada exitosamente';
@@ -58,7 +78,7 @@ class CanchaController {
             session_start();
         }
         
-        if (!isset($_SESSION['user_id']) || ($_SESSION['rol'] !== 'admin' && $_SESSION['rol'] !== 'encargado')) {
+        if (!isset($_SESSION['user_id']) || ($_SESSION['rol'] !== 1 && $_SESSION['rol'] !== 3)) {
             header("Location: " . URL . "index.php");
             exit();
         }
@@ -76,11 +96,47 @@ class CanchaController {
                 'id' => $_GET['id'],
                 'nombre' => $_POST['nombre'],
                 'tipo' => $_POST['tipo'],
-                'capacidad' => $_POST['capacidad'],
                 'precio_hora' => $_POST['precio_hora'],
-                'descripcion' => $_POST['descripcion'] ?? '',
-                'estado' => $_POST['estado']
+                'estado' => $_POST['estado'],
+                'imagen' => $cancha['imagen'] ?? '' // Mantener imagen actual
             ];
+
+            // Eliminar imagen anterior si se solicita
+            if (isset($_POST['eliminar_imagen']) && !empty($cancha['imagen'])) {
+                $rutaImagenAnterior = 'public/img/canchas/' . $cancha['imagen'];
+                if (file_exists($rutaImagenAnterior)) {
+                    unlink($rutaImagenAnterior);
+                }
+                $datos['imagen'] = '';
+            }
+
+            // Manejar subida de nueva imagen
+            if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+                $directorioDestino = 'public/img/canchas/';
+                $extension = strtolower(pathinfo($_FILES['imagen']['name'], PATHINFO_EXTENSION));
+                $extensionesPermitidas = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp'];
+                
+                if (in_array($extension, $extensionesPermitidas)) {
+                    // Eliminar imagen anterior si existe
+                    if (!empty($cancha['imagen'])) {
+                        $rutaImagenAnterior = $directorioDestino . $cancha['imagen'];
+                        if (file_exists($rutaImagenAnterior)) {
+                            unlink($rutaImagenAnterior);
+                        }
+                    }
+                    
+                    $nombreArchivo = uniqid('cancha_') . '.' . $extension;
+                    $rutaCompleta = $directorioDestino . $nombreArchivo;
+                    
+                    if (move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaCompleta)) {
+                        $datos['imagen'] = $nombreArchivo;
+                    } else {
+                        $_SESSION['error'] = 'Error al subir la imagen';
+                    }
+                } else {
+                    $_SESSION['error'] = 'Formato de imagen no permitido. Use: JPG, PNG, GIF, WEBP o BMP';
+                }
+            }
 
             if ($canchaModel->actualizar($datos)) {
                 $_SESSION['mensaje'] = 'Cancha actualizada exitosamente';
@@ -99,7 +155,7 @@ class CanchaController {
             session_start();
         }
         
-        if (!isset($_SESSION['user_id']) || $_SESSION['rol'] !== 'admin') {
+        if (!isset($_SESSION['user_id']) || $_SESSION['rol'] !== 1) {
             header("Location: " . URL . "index.php");
             exit();
         }

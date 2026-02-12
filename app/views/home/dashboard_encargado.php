@@ -19,6 +19,75 @@
         .nav-link.active { background-color: var(--verde-patos) !important; }
         .btn-primary { background-color: var(--verde-patos) !important; border-color: var(--verde-patos) !important; }
         .btn-primary:hover { background-color: #0d9682 !important; }
+        
+        /* Estilos responsivos para móviles */
+        @media (max-width: 991.98px) {
+            .main-header .navbar-nav {
+                flex-direction: row !important;
+            }
+            .main-header .navbar-nav .nav-item {
+                display: flex !important;
+            }
+            .content-wrapper {
+                margin-left: 0 !important;
+            }
+        }
+        
+        @media (max-width: 767px) {
+            .small-box h3 {
+                font-size: 1.5rem;
+            }
+            .small-box p {
+                font-size: 0.85rem;
+            }
+            .card-header h3 {
+                font-size: 1rem;
+            }
+            
+            /* Tablas responsivas estilo cards */
+            .table-responsive table thead {
+                display: none;
+            }
+            .table-responsive table,
+            .table-responsive table tbody,
+            .table-responsive table tr,
+            .table-responsive table td {
+                display: block;
+                width: 100%;
+            }
+            .table-responsive table tr {
+                margin-bottom: 15px;
+                border: 1px solid #dee2e6;
+                border-radius: 8px;
+                padding: 10px;
+                background: #fff;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .table-responsive table td {
+                text-align: right;
+                padding: 8px 10px;
+                position: relative;
+                padding-left: 50%;
+                border: none;
+                border-bottom: 1px solid #eee;
+            }
+            .table-responsive table td:last-child {
+                border-bottom: none;
+            }
+            .table-responsive table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 10px;
+                width: 45%;
+                text-align: left;
+                font-weight: bold;
+                color: #333;
+            }
+            .table-responsive table td .btn {
+                width: 100%;
+                margin-top: 5px;
+            }
+        }
     </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -37,11 +106,11 @@
 
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
+                    <a class="nav-link dropdown-toggle" href="#" id="notificationsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="far fa-bell"></i>
                         <span class="badge badge-danger navbar-badge"><?php echo count($reservasPendientes); ?></span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" aria-labelledby="notificationsDropdown">
                         <span class="dropdown-item dropdown-header"><?php echo count($reservasPendientes); ?> Reservas Pendientes</span>
                         <div class="dropdown-divider"></div>
                         <a href="<?php echo URL; ?>index.php?c=Reserva&a=index" class="dropdown-item">
@@ -51,11 +120,11 @@
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="far fa-user-circle fa-lg"></i>
                         <span class="d-none d-md-inline ml-2"><?php echo explode(' ', $_SESSION['user_nombre'])[0]; ?></span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <div class="dropdown-header text-center">
                             <h5><?php echo $_SESSION['user_nombre']; ?></h5>
                             <span class="badge badge-warning">Encargado</span>
@@ -191,19 +260,21 @@
                                             <?php if(!empty($reservasHoy)): ?>
                                                 <?php foreach(array_slice($reservasHoy, 0, 10) as $reserva): ?>
                                                 <tr>
-                                                    <td><?php echo date('H:i', strtotime($reserva['hora_inicio'])); ?></td>
-                                                    <td><?php echo $reserva['cancha_nombre']; ?></td>
-                                                    <td><?php echo $reserva['cliente_nombre']; ?></td>
-                                                    <td>
+                                                    <td data-label="Hora"><?php echo date('H:i', strtotime($reserva['alquiler_hora_inicial'])); ?></td>
+                                                    <td data-label="Cancha"><?php echo $reserva['cancha_nombre']; ?></td>
+                                                    <td data-label="Cliente"><?php echo $reserva['usuario_nombre']; ?></td>
+                                                    <td data-label="Estado">
                                                         <span class="badge badge-<?php 
-                                                            echo $reserva['estado'] === 'confirmada' ? 'success' : 
-                                                                ($reserva['estado'] === 'pendiente' ? 'warning' : 'danger'); 
+                                                            $estado = strtolower($reserva['estado_nombre']);
+                                                            echo $estado === 'aprobado' ? 'success' : 
+                                                                ($estado === 'registrado' ? 'warning' : 
+                                                                ($estado === 'finalizado' ? 'primary' : 'danger')); 
                                                         ?>">
-                                                            <?php echo ucfirst($reserva['estado']); ?>
+                                                            <?php echo ucfirst($reserva['estado_nombre']); ?>
                                                         </span>
                                                     </td>
-                                                    <td>
-                                                        <a href="<?php echo URL; ?>index.php?c=Reserva&a=detalle&id=<?php echo $reserva['id']; ?>" class="btn btn-sm btn-info">
+                                                    <td data-label="Acciones">
+                                                        <a href="<?php echo URL; ?>index.php?c=Alquiler&a=editar&id=<?php echo $reserva['alquiler_id']; ?>" class="btn btn-sm btn-info">
                                                             <i class="fas fa-eye"></i>
                                                         </a>
                                                     </td>
