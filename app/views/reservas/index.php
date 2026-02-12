@@ -18,6 +18,61 @@
         .brand-link { background-color: var(--oscuro-patos) !important; }
         .nav-link.active { background-color: var(--verde-patos) !important; }
         .btn-primary { background-color: var(--verde-patos) !important; border-color: var(--verde-patos) !important; }
+        
+        /* Botones de acción principales responsive */
+        @media (max-width: 991.98px) {
+            .content-wrapper {
+                margin-left: 0 !important;
+            }
+        }
+        
+        @media (max-width: 767px) {
+            .row.mb-3 .col-12 {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            .row.mb-3 .btn {
+                width: 100%;
+                padding: 12px;
+            }
+        }
+        
+        /* Estilos responsive para tabla */
+        @media (max-width: 767px) {
+            #tablaReservas thead { display: none; }
+            #tablaReservas tbody tr {
+                display: block;
+                margin-bottom: 1rem;
+                border: 1px solid #dee2e6;
+                border-radius: 8px;
+                background: #fff;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            #tablaReservas tbody td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.75rem 1rem;
+                border: none;
+                border-bottom: 1px solid #eee;
+                text-align: right;
+            }
+            #tablaReservas tbody td:last-child { border-bottom: none; }
+            #tablaReservas tbody td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: #495057;
+                text-align: left;
+                margin-right: 10px;
+            }
+            #tablaReservas .btn-group { justify-content: flex-end; }
+            .dataTables_wrapper .row:first-child,
+            .dataTables_wrapper .row:last-child { flex-direction: column; }
+            .dataTables_length, .dataTables_filter,
+            .dataTables_info, .dataTables_paginate { margin: 0.5rem 0; text-align: center !important; }
+            .dataTables_filter input { width: 100% !important; }
+        }
     </style>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -36,11 +91,11 @@
 
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="far fa-user-circle fa-lg"></i>
                         <span class="d-none d-md-inline ml-2"><?php echo explode(' ', $_SESSION['user_nombre'])[0]; ?></span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <div class="dropdown-header text-center">
                             <h5><?php echo $_SESSION['user_nombre']; ?></h5>
                             <span class="badge badge-<?php echo $_SESSION['rol'] === 'admin' ? 'danger' : ($_SESSION['rol'] === 'encargado' ? 'warning' : 'success'); ?>">
@@ -116,21 +171,21 @@
                                         <tbody>
                                             <?php foreach($reservas as $reserva): ?>
                                             <tr>
-                                                <td><?php echo $reserva['id']; ?></td>
-                                                <td><?php echo date('d/m/Y', strtotime($reserva['fecha'])); ?></td>
-                                                <td>
+                                                <td data-label="ID"><?php echo $reserva['id']; ?></td>
+                                                <td data-label="Fecha"><?php echo date('d/m/Y', strtotime($reserva['fecha'])); ?></td>
+                                                <td data-label="Hora">
                                                     <?php echo date('H:i', strtotime($reserva['hora_inicio'])); ?> - 
                                                     <?php echo date('H:i', strtotime($reserva['hora_fin'])); ?>
                                                 </td>
-                                                <td>
+                                                <td data-label="Cancha">
                                                     <span class="badge badge-info">
                                                         <?php echo $reserva['cancha_nombre'] ?? 'N/A'; ?>
                                                     </span>
                                                 </td>
                                                 <?php if($_SESSION['rol'] !== 'cliente'): ?>
-                                                <td><?php echo $reserva['cliente_nombre'] ?? 'N/A'; ?></td>
+                                                <td data-label="Cliente"><?php echo $reserva['cliente_nombre'] ?? 'N/A'; ?></td>
                                                 <?php endif; ?>
-                                                <td>
+                                                <td data-label="Estado">
                                                     <span class="badge badge-<?php 
                                                         echo $reserva['estado'] === 'confirmada' ? 'success' : 
                                                             ($reserva['estado'] === 'pendiente' ? 'warning' : 
@@ -139,8 +194,8 @@
                                                         <?php echo ucfirst($reserva['estado']); ?>
                                                     </span>
                                                 </td>
-                                                <td>$<?php echo number_format($reserva['precio_total'], 2); ?></td>
-                                                <td>
+                                                <td data-label="Precio">$<?php echo number_format($reserva['precio_total'], 2); ?></td>
+                                                <td data-label="Acciones">
                                                     <div class="btn-group">
                                                         <a href="<?php echo URL; ?>index.php?c=Reserva&a=detalle&id=<?php echo $reserva['id']; ?>" 
                                                            class="btn btn-sm btn-info" title="Ver detalles">

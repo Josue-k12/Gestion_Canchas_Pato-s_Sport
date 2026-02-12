@@ -550,9 +550,9 @@ if ($rol !== 'invitado') {
         </div>
         <div class="col-md-4">
             <div class="card h-100 border-0 shadow-sm p-4 text-center hover-card">
-                <i class="bi bi-credit-card-2-front fs-1 text-success mb-3"></i>
-                <h5 class="fw-bold">Pagos Digitales</h5>
-                <p class="text-muted small">Múltiples métodos de pago integrados para tu seguridad y comodidad.</p>
+                <i class="bi bi-clock-history fs-1 text-success mb-3"></i>
+                <h5 class="fw-bold">Gestión en Tiempo Real</h5>
+                <p class="text-muted small">Consulta disponibilidad instantánea y gestiona tus reservas al momento.</p>
             </div>
         </div>
         <div class="col-md-4">

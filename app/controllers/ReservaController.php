@@ -19,7 +19,8 @@ class ReservaController {
         $rol = $_SESSION['rol'];
         $userId = $_SESSION['user_id'];
 
-        if ($rol === 'admin' || $rol === 'encargado') {
+        // Roles: 1=admin, 3=encargado (en sesión se guarda el ID numérico)
+        if ($rol === 1 || $rol === 3) {
             $reservas = $reservaModel->obtenerTodas();
         } else {
             $reservas = $reservaModel->obtenerPorUsuario($userId);
@@ -34,14 +35,13 @@ class ReservaController {
         }
         
         if (!isset($_SESSION['user_id'])) {
-            header("Location: " . URL . "app/views/auth/login.php");
+            header("Location: " . URL . "index.php?c=Auth&a=login");
             exit();
         }
 
-        $reservaModel = new Reserva();
-        $reservas = $reservaModel->obtenerPorUsuario($_SESSION['user_id']);
-
-        include 'app/views/reservas/index.php';
+        // Redirigir al nuevo sistema de Alquileres
+        header("Location: " . URL . "index.php?c=Alquiler&a=misAlquileres");
+        exit();
     }
 
     public function crear() {
@@ -50,36 +50,13 @@ class ReservaController {
         }
         
         if (!isset($_SESSION['user_id'])) {
-            header("Location: " . URL . "app/views/auth/login.php");
+            header("Location: " . URL . "index.php?c=Auth&a=login");
             exit();
         }
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $reservaModel = new Reserva();
-            
-            $datos = [
-                'usuario_id' => $_SESSION['user_id'],
-                'cancha_id' => $_POST['cancha_id'],
-                'fecha' => $_POST['fecha'],
-                'hora_inicio' => $_POST['hora_inicio'],
-                'hora_fin' => $_POST['hora_fin'],
-                'precio_total' => $_POST['precio_total'] ?? 0,
-                'estado' => 'pendiente'
-            ];
-
-            if ($reservaModel->crear($datos)) {
-                $_SESSION['mensaje'] = 'Reserva creada exitosamente';
-                header("Location: " . URL . "index.php?c=Reserva&a=index");
-                exit();
-            } else {
-                $_SESSION['error'] = 'Error al crear la reserva';
-            }
-        }
-
-        $canchaModel = new Cancha();
-        $canchas = $canchaModel->obtenerTodas();
-
-        include 'app/views/reservas/crear.php';
+        // Redirigir al nuevo sistema de Alquileres
+        header("Location: " . URL . "index.php?c=Alquiler&a=crear");
+        exit();
     }
 
     public function editar() {
@@ -87,7 +64,7 @@ class ReservaController {
             session_start();
         }
         
-        if (!isset($_SESSION['user_id']) || ($_SESSION['rol'] !== 'admin' && $_SESSION['rol'] !== 'encargado')) {
+        if (!isset($_SESSION['user_id']) || ($_SESSION['rol'] !== 1 && $_SESSION['rol'] !== 3)) {
             header("Location: " . URL . "index.php");
             exit();
         }
@@ -131,7 +108,7 @@ class ReservaController {
             session_start();
         }
         
-        if (!isset($_SESSION['user_id']) || $_SESSION['rol'] !== 'admin') {
+        if (!isset($_SESSION['user_id']) || $_SESSION['rol'] !== 1) {
             header("Location: " . URL . "index.php");
             exit();
         }
@@ -178,7 +155,7 @@ class ReservaController {
         }
 
         // Verificar permisos
-        if ($_SESSION['rol'] === 'cliente' && $reserva['usuario_id'] != $_SESSION['user_id']) {
+        if ($_SESSION['rol'] === 2 && $reserva['usuario_id'] != $_SESSION['user_id']) {
             $_SESSION['error'] = 'No tienes permiso para ver esta reserva';
             header("Location: " . URL . "index.php?c=Reserva&a=index");
             exit();

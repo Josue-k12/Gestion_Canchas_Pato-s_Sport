@@ -90,7 +90,7 @@
             <h2 class="fw-bold mb-1">Bienvenido de Nuevo</h2>
             <p class="text-muted mb-4">Accede a tu panel de gestión.</p>
 
-            <form action="<?php echo URL; ?>app/controllers/AuthController.php?action=login" method="POST">
+            <form action="<?php echo URL; ?>index.php?c=Auth&a=login" method="POST">
                 
                 <div class="text-start mb-3">
                     <label class="form-label small fw-bold">Usuario (Email)</label>
@@ -122,8 +122,10 @@
             </form>
 
             <p class="small text-muted mt-3">
-                ¿No tienes una cuenta? <br>
-                <span class="text-dark fw-bold">Contacta a la administración del complejo para solicitar acceso.</span>
+                ¿No tienes una cuenta? 
+                <a href="<?php echo URL; ?>index.php?c=Auth&a=register" class="text-decoration-none fw-bold" style="color: var(--verde-patos);">
+                    Regístrate aquí
+                </a>
             </p>
         </div>
     </div>
