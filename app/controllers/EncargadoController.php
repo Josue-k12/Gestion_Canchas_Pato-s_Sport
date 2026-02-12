@@ -22,12 +22,14 @@ class EncargadoController {
     }
 
     // Acción principal: Listar encargados
-    public function index() {
-        $encargados = $this->modelo->listar();
-        
-        // Esta ruta debe coincidir con tu carpeta de vistas
-        include 'app/views/encargados/index.php';
-    }
+public function index() {
+    // Estas variables deben venir de tus modelos (puedes poner datos de prueba por ahora)
+    $reservasPendientes = []; 
+    $reservasHoy = [];
+    $totalCanchas = 5;
+
+    include 'app/views/encargados/index.php'; // Tu dashboard
+}
 
     // Acción para mostrar el formulario de registro
     public function nuevo() {
